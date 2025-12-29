@@ -1,0 +1,53 @@
+/* https://images03.nicepage.com/a1389d7bc73adea1e1c1fb7e/80f9d9d02af9527ab358c361/pexels-photo-3335367.jpeg */
+h1 {
+    line-height: 200% ;
+}
+
+body {
+    background-color: rgba(127, 127, 127, 0.217) ;
+}
+
+div.main {
+    /* border: 1px solid red ; */
+    margin: 50px auto ;
+    width: 80% ;
+    text-align: center ;
+}
+
+div.main .picture1 {
+    /* border: 1px solid red ; */
+    background-image: url(https://images03.nicepage.com/a1389d7bc73adea1e1c1fb7e/80f9d9d02af9527ab358c361/pexels-photo-3335367.jpeg) ;
+    background-repeat: no-repeat;
+    background-size: cover ;
+    display: inline-block ;
+    height: 600px ;
+    width: 45% ;
+    vertical-align: top ;
+    box-sizing: border-box;
+    margin-right: 30px ;
+    min-width: 400px;
+}
+
+div.main .textbox1 {
+    /* border: 1px solid red ; */
+    display: inline-block ;
+    height: 600px ;
+    width: 45% ;
+    vertical-align: top ;
+    box-sizing: border-box ;
+    /* margin-left: -4px ; */
+    padding: 50px 30px ;
+    line-height: 2em;
+    min-width: 400px;
+    text-align: left ;
+    background-color: white ;
+}
+
+div .readmore {
+    border: 1px solid black ;
+    width: 100px ;
+    height: 50px ;
+    text-align: center ;
+    line-height: 50px ;
+    margin-top: 20px ;
+}
