@@ -1,0 +1,156 @@
+.ma {
+    margin-top: 100px;
+}
+div {
+    display: inline-block;
+    border: 1px solid red;
+}
+.sm {
+    width: 70px;
+    height: 70px;
+}
+.img1 {
+    position: absolute;
+    left: 10px;
+    top: 110px;
+}
+.img2 {
+    position: absolute;
+    left: 10px;
+    top: 180px;
+}
+.img3 {
+    position: absolute;
+    left: 10px;
+    top: 250px;
+}
+.img4 {
+    position: absolute;
+    left: 10px;
+    top: 320px;
+}
+.img5 {
+    position: absolute;
+    left: 10px;
+    top: 390px;
+}
+.img6 {
+    position: absolute;
+    left: 10px;
+    top: 465px;
+}
+.img7 {
+    position: absolute;
+    left: 10px;
+    top: 540px;
+}
+.img8 {
+    position: absolute;
+    left: 10px;
+    top: 615px;
+}
+.img9 {
+    position: absolute;
+    left: 10px;
+    top: 690px;
+}
+.bimg1 {
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    left: 150px;
+    top: 150px;
+    display: none;
+}
+.bimg2 {
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    left: 150px;
+    top: 150px;
+    display: none;
+}
+.bimg3 {
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    left: 150px;
+    top: 150px;
+    display: none;
+}
+.bimg4 {
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    left: 150px;
+    top: 150px;
+    display: none;
+}
+.bimg5 {
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    left: 150px;
+    top: 150px;
+    display: none;
+}
+.bimg6 {
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    left: 150px;
+    top: 150px;
+    display: none;
+}
+.bimg7 {
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    left: 150px;
+    top: 150px;
+    display: none;
+}
+.bimg8 {
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    left: 150px;
+    top: 150px;
+    display: none;
+}
+.bimg9 {
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    left: 150px;
+    top: 150px;
+    display: none;
+}
+.img1:hover + .bimg1 {
+    display: block;
+}
+.img2:hover + .bimg2 {
+    display: block;
+}
+.img3:hover + .bimg3 {
+    display: block;
+}
+.img4:hover + .bimg4 {
+    display: block;
+}
+.img5:hover + .bimg5 {
+    display: block;
+}
+.img6:hover + .bimg6 {
+    display: block;
+}
+.img7:hover + .bimg7 {
+    display: block;
+}
+.img8:hover + .bimg8 {
+    display: block;
+}
+.img9:hover + .bimg9 {
+    display: block;
+}
+
