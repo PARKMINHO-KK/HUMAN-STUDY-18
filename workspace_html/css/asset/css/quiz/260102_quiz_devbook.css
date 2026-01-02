@@ -1,0 +1,223 @@
+div {
+    /* border: 1px solid red; */
+    display: inline-block;
+}
+
+.text_logo {
+    font-size: 1.5em;
+    transform: translateY(-10px);
+    font-weight: 700;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    width: 97vw;
+    height: 97vh;
+}
+
+.left1, .right1 {
+    height: 80vh;
+    vertical-align: top;
+    display: inline-block;
+    margin-top: 5vh;
+    padding-left: 60px;
+    padding-right: 20px;
+    /* flex-grow: 1; */
+}
+
+.right1 > img {
+    /* width: 40vw; */
+    height: 70vh;
+    display: flex;
+    justify-self: center;
+}
+
+.per {
+    display: none;
+    width: 630px;
+    margin-top: 40px;
+    position: absolute;
+    top: 440px;
+    left: 70px;
+    /* display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start; */
+}
+
+.per img {
+    height: 7vh;
+}
+
+.name, .job {
+    display: block;
+    line-height: 3.5vh;
+    font-size: 0.8em;
+    font-weight: 400;
+    color: #4c527d;
+}
+
+.najob {
+    vertical-align: top;
+}
+
+.tbox {
+    background-color: #f6f8fc;
+    padding: 20px;
+    font-style: italic;
+    color: #4c527d;
+    border-left: 4px solid #f5a782;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+h1 {
+    font-size: 2.2em;
+}
+
+h1 + div {
+    color: #4c527d;
+    font-size: 1.25em;
+}
+
+.buy {
+    border: #ed6524;
+    background-color: #ed6524;
+    height: 50px;
+    width: 150px;
+    border-radius: 50px;
+    line-height: 50px;
+    text-align: center;
+    margin-top: 30px;
+    margin-right: 10px;
+    color: white;
+    font-weight: 700;
+}
+
+.learn {
+    border: 1px solid #ed6524;
+    background-color: white;
+    height: 50px;
+    width: 150px;
+    border-radius: 50px;
+    line-height: 50px;
+    text-align: center;
+    color: #ed6524;
+    font-weight: 700;
+}
+
+input:checked + .per {
+  display: block;
+}
+
+input {
+    /* position: absolute;
+    top: 680px;
+    left: 40px; */
+    transform: translate(-40px, 280px);
+}
+
+#mark {
+    height: 130px;
+    width: 130px;
+    background-color: #5cb377;
+    color: white;
+    border-radius: 50%;
+    border: #5cb377;
+    display: inline-flex;
+    align-items: center;
+    /* justify-content: center; */
+    padding: 7px;
+    box-sizing: border-box;
+    text-align: center;
+    /* display: flex;
+    align-items: center; */
+    font-weight: 700;
+    font-size: 1.3em;
+    line-height: 1.1em;
+    position: absolute;
+    top: 50px;
+    right: 20px;
+}
+
+.see {
+    text-decoration: underline;
+    font-weight: 400;
+    font-size: 0.9em;
+    position: relative;
+    left: 150px;
+    top: -10px;
+}
+
+.page2 {
+    /* border: 1px solid red; */
+    height: 97vh;
+    width: 97vw;
+    background-color: #f6f8fc;
+}
+
+.title2 {
+    margin-top: 70px;
+    margin-bottom: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+.title2 > h2 {
+    font-size: 2.4em;
+    line-height: 90%;
+}
+
+.title2 > div {
+    font-size: 1.1em;
+    color: #4c527d;
+    line-height: 140%;
+}
+
+.bbox {
+    margin: 0 58.5px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+
+}
+
+.cbox {
+    margin-top: 30px;
+    width: 25vw;
+    height: 25vh;
+    display: inline-flex;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.ctitle, .ctxt {
+    text-align: center;
+    line-height: 1.3em;
+}
+
+.ctitle {
+    font-weight: 700;
+    margin-top: 5px;
+}
+
+.ctxt {
+    color: #4c527d;
+    margin-top: 16px;
+}
+
+.cbox > img {
+    /* display: block;
+    text-align: center; */
+    height: 65px;
+}
+
+#scroll {
+    position: absolute;
+    right: 5px;
+}
+
