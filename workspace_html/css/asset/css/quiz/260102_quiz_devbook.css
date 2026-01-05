@@ -87,7 +87,7 @@ h1 + div {
     border: #ed6524;
     background-color: #ed6524;
     height: 50px;
-    width: 150px;
+    width: 150px; 
     border-radius: 50px;
     line-height: 50px;
     text-align: center;
@@ -220,4 +220,100 @@ input {
     position: absolute;
     right: 5px;
 }
+
+.page3 {
+    height: 97vh;
+    width: 97vw;
+}
+
+.container3 {
+    display: flex;
+    justify-content: center;
+}
+
+.title3 {
+    display: block;
+    margin: 20px 0;
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.left3 > img {
+    height: 450px;
+    width: 350px;
+}
+
+.right3 {
+    height: 75vh;
+    width: 45vw;
+    box-sizing: border-box;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    vertical-align: top;
+    padding-left: 3vw;
+}
+
+.right3 > div {
+    width: 95vw;
+    height: 6vh;
+    display: flex;
+    align-items: center;
+    font-size: 1.05em;
+}
+
+.left3 {
+    height: 75vh;
+    width: 45vw;
+    display: inline-flex;
+    justify-content: flex-end;
+    box-sizing: border-box;
+    padding-right: 3vw;
+}
+
+.iw {
+    display: inline-block;
+    width: 175px;
+    font-size: 0.9em;
+    margin-left: 10%;
+}
+
+.page4 {
+    text-align: center;
+}
+
+.page3 > div > div {
+    line-height: 170%;
+}
+
+.container4 {
+    width: 540px;
+    text-align: center;
+}
+
+.mc {
+    width: 470px;
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    vertical-align: top;
+}
+
+.mc > .ctitle {
+    display: flex;
+    width: 470px;
+}
+
+.mc > .ctxt {
+    width: 470px;
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.mcimg > img {
+    height: 30px;
+}
+
+
+
 
