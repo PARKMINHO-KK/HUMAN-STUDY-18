@@ -176,10 +176,10 @@ public class IfExam_01 {
 //		int num = scan.nextInt();
 //		if (num==0) {
 //			System.out.println("임의의 수는 0");
-//		} else if(num%2==0) {
-//				System.out.println("임의의 수는 짝수");
+//		} else if(num > 0) {
+//				System.out.println("임의의 수는 양수");
 //		} else {
-//			System.out.println("임의의 수는 홀수");
+//			System.out.println("임의의 수는 음수");
 //		}
 		
 		// 문제2
@@ -196,7 +196,7 @@ public class IfExam_01 {
 		// 문제3
 		// 임의의 두 수 x, y를 받아서
 		// 둘 중에 큰 값 출력
-//		System.out.println("두 개의 숫자를 입력하시오.");
+//		System.out.println("문제3: 두 가지의 수를 입력하시오.");
 //		Scanner scan2 = new Scanner(System.in);
 //		Scanner scan3 = new Scanner(System.in);
 //		int xx = scan2.nextInt();
@@ -214,7 +214,7 @@ public class IfExam_01 {
 		// 7000원 이상이면 "택시타자" 출력
 		// 7000~3000 사이면 "버스타자" 출력
 		// 3000 미만이면 "걸어가자" 출력
-//		System.out.println("임의의 금액을 입력하시오.");
+//		System.out.println("문제4: 임의의 금액을 입력하시오.");
 //		Scanner scan4 = new Scanner(System.in);
 //		int money = scan4.nextInt();
 //		if (money >= 7000) {
@@ -319,30 +319,51 @@ public class IfExam_01 {
         // 계절 출력
         // 13, -1등 입력하면 "정확히 입력해주세요" 출력
 		
-		//------------------월입력창--------------------------------
-		System.out.println("월을 입력하세요");
-		//----------------------------------------------------------
-		//------------------스캔,변수-------------------------------
-		Scanner month = new Scanner(System.in);
-		int imonth = month.nextInt();
-		//----------------------------------------------------------
-		//-------------------if 구문--------------------------------
-		if ((2 >= imonth && imonth >= 1) || (12 >= imonth && imonth >= 11)) {
-			System.out.println(imonth + "월" + ", 계절은: 겨울입니다");
-		} else if (5 >= imonth && imonth >= 3) {
-			System.out.println(imonth + "월" + ", 계절은: 봄입니다");
-		} else if (8 >= imonth && imonth >= 6) {
-		System.out.println(imonth + "월" + ", 계절은: 여름입니다");
-		} else if (10 >= imonth && imonth >= 9) {
-		System.out.println(imonth + "월" + ", 계절은: 가을입니다");
-		} else {System.out.println("정확히 입력해주세요");}
-		//----------------------------------------------------------
-		
+//		//------------------월입력창--------------------------------
+//		System.out.println("월을 입력하세요");
+//		//----------------------------------------------------------
+//		//------------------스캔,변수-------------------------------
+//		Scanner month = new Scanner(System.in);
+//		int imonth = month.nextInt();
+//		//----------------------------------------------------------
+//		//-------------------if 구문--------------------------------
+//		if ((2 >= imonth && imonth >= 1) || (12 >= imonth && imonth >= 11)) {
+//			System.out.println(imonth + "월" + ", 계절은: 겨울입니다");
+//		} else if (5 >= imonth && imonth >= 3) {
+//			System.out.println(imonth + "월" + ", 계절은: 봄입니다");
+//		} else if (8 >= imonth && imonth >= 6) {
+//		System.out.println(imonth + "월" + ", 계절은: 여름입니다");
+//		} else if (10 >= imonth && imonth >= 9) {
+//		System.out.println(imonth + "월" + ", 계절은: 가을입니다");
+//		} else {System.out.println("정확히 입력해주세요");}
+//		//----------------------------------------------------------
+//		
         
         // 문제8
         // 임의의 수를 입력받아서 다음과 같이 출력
         // 예 : 125
         // 입력한 수는 100보다 크고, 양수이고, 홀수입니다.
+		//-----------------출력----------------------
+		System.out.println("문제8번 임의의 수 입력하시오");
+		//-------------------------------------------
+		//-----------------스캔-----------------------
+		Scanner num8 = new Scanner(System.in);
+		int num81 = num8.nextInt();
+		//--------------------------------------------
+		//-----------------if-------------------------
+		if (num81 > 100 && num81 >0 && num81%2 == 1) {
+			System.out.println("입력한 수는 100보다 크고, 양수이고, 홀수입니다");
+		} else if (num81 > 100 && num81 > 0 && num81%2 == 0) {
+			System.out.println("입력한 수는 100보다 크고, 양수이고, 짝수입니다");
+		} else if (num81 < 100 && num81 >= 0 && num81%2 == 0) {
+			System.out.println("입력한 수는 100보다 작고, 양수이고, 짝수입니다");
+		} else if (num81 < 100 && num81 > 0 && num81%2 == 1) {
+			System.out.println("입력한 수는 100보다 작고, 양수이고, 홀수입니다");
+		} else if (num81 < 100 && num81 < 0 && num81%-2 == 1) {
+			System.out.println("입력한 수는 100보다 작고, 음수이고, 홀수입니다");
+		} else {System.out.println("입력한 수는 100보다 작고, 음수이고, 짝수입니다");}
+		//---------------------------------------------
+		
         
         // 문제9
         // 온도를 입력받아서 다음과 같이 출력
