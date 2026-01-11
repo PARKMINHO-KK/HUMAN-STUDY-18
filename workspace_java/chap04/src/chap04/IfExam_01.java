@@ -343,26 +343,26 @@ public class IfExam_01 {
         // 임의의 수를 입력받아서 다음과 같이 출력
         // 예 : 125
         // 입력한 수는 100보다 크고, 양수이고, 홀수입니다.
-		//-----------------출력----------------------
-		System.out.println("문제8번 임의의 수 입력하시오");
-		//-------------------------------------------
-		//-----------------스캔-----------------------
-		Scanner num8 = new Scanner(System.in);
-		int num81 = num8.nextInt();
-		//--------------------------------------------
-		//-----------------if-------------------------
-		if (num81 > 100 && num81 >0 && num81%2 == 1) {
-			System.out.println("입력한 수는 100보다 크고, 양수이고, 홀수입니다");
-		} else if (num81 > 100 && num81 > 0 && num81%2 == 0) {
-			System.out.println("입력한 수는 100보다 크고, 양수이고, 짝수입니다");
-		} else if (num81 < 100 && num81 >= 0 && num81%2 == 0) {
-			System.out.println("입력한 수는 100보다 작고, 양수이고, 짝수입니다");
-		} else if (num81 < 100 && num81 > 0 && num81%2 == 1) {
-			System.out.println("입력한 수는 100보다 작고, 양수이고, 홀수입니다");
-		} else if (num81 < 100 && num81 < 0 && num81%-2 == 1) {
-			System.out.println("입력한 수는 100보다 작고, 음수이고, 홀수입니다");
-		} else {System.out.println("입력한 수는 100보다 작고, 음수이고, 짝수입니다");}
-		//---------------------------------------------
+//		//-----------------출력----------------------
+//		System.out.println("문제8번 임의의 수 입력하시오");
+//		//-------------------------------------------
+//		//-----------------스캔-----------------------
+//		Scanner num8 = new Scanner(System.in);
+//		int num81 = num8.nextInt();
+//		//--------------------------------------------
+//		//-----------------if-------------------------
+//		if (num81 > 100 && num81 >0 && num81%2 == 1) {
+//			System.out.println("입력한 수는 100보다 크고, 양수이고, 홀수입니다");
+//		} else if (num81 > 100 && num81 > 0 && num81%2 == 0) {
+//			System.out.println("입력한 수는 100보다 크고, 양수이고, 짝수입니다");
+//		} else if (num81 < 100 && num81 >= 0 && num81%2 == 0) {
+//			System.out.println("입력한 수는 100보다 작고, 양수이고, 짝수입니다");
+//		} else if (num81 < 100 && num81 > 0 && num81%2 == 1) {
+//			System.out.println("입력한 수는 100보다 작고, 양수이고, 홀수입니다");
+//		} else if (num81 < 100 && num81 < 0 && num81%-2 == 1) {
+//			System.out.println("입력한 수는 100보다 작고, 음수이고, 홀수입니다");
+//		} else {System.out.println("입력한 수는 100보다 작고, 음수이고, 짝수입니다");}
+//		//---------------------------------------------
 		
         
         // 문제9
@@ -371,29 +371,105 @@ public class IfExam_01 {
         // 영하 3도 입니다
         // 예 : 5
         // 영상 5도 입니다
+		
+//		//---------------문제출력-------------
+//		System.out.println("임의의 온도를 입력하시오");
+//		//------------------------------------
+//		//---------------변수선언-------------
+//		Scanner rdeg = new Scanner(System.in);
+//		int deg = rdeg.nextInt();
+//		//------------------------------------
+//		//---------------if 구문--------------
+//		if(deg == 0) { // 입력값이 0일 때
+//			System.out.println("0도 입니다");
+//		} else if(deg > 0) { // 입력값이 양수일 때
+//			System.out.println("영상 " + deg + "도 입니다");
+//		} else { // 입력값이 음수일 때
+//			System.out.println("영하 " + deg*-1 + "도 입니다");
+//		}
+//		//------------------------------------
         
         // 응용문제
         // 문제10
         // 시, 분을 입력 받아서 35분 후의 시, 분을 출력
         // 3, 51을 입력받으면
         // 4시 26분 출력
+//		System.out.println("문제10 : 임의의 시, 분을 입력하시오");
+//		Scanner sh = new Scanner(System.in);
+//		Scanner sm = new Scanner(System.in);
+//		int hour = sh.nextInt();
+//		int minu = sm.nextInt();
+//		int plus = 35;
+//		int pmin = minu + plus;
+//		int m60 = pmin%60;
+//		
+//		if(hour < 24 && hour >= 0 && pmin < 60) { // pmin이 60미만일 때
+//			System.out.printf("%d시 %d분", hour, pmin);
+//		} else if (hour+1 < 24 && hour >= 0 && pmin >= (60-plus) && pmin < (60+plus)) { // pmin이 60이상일 때
+//			System.out.printf("%d시 %d분", hour+1, m60);
+//		} else {System.out.println("정확히 입력하시오");} // 23시 59분 초과일 때
         
         // 문제11
         // 두자리 숫자를 입력받아서
         // 10의 자리와 1의 자리가 같은지 판단
         // 예 : 77 => 같음, 94 => 다름
+//		System.out.println("문제11 임의의 두자리 숫자의 십의자리와 일의자리 같은지 비교");
+//		System.out.println("임의의 2자리 숫자를 입력하시오");
+//		
+//		Scanner tn = new Scanner(System.in);
+//		double tnum = tn.nextDouble();
+//		int tenn = (int)tnum/10; // 십의 자리
+//		int onen = (int)(tnum%10); // 일의 자리
+//		
+//		if(tenn == onen) {
+//			System.out.printf("%d%d => 같음", tenn, onen);
+//		} else {
+//			System.out.printf("%d%d => 다름", tenn, onen);
+//		}
+//		System.out.println("");
         
         // 문제12
         // 1~99까지 369게임
         // 임의의 수를 받아서 3,6,9 숫자가 있으면 "박수" 출력
         // 없으면 그 숫자 그대로 출력
         // 예 : 33 => 박수, 31 => 박수, 12 => 12, 14 => 14
+		
+//		System.out.println("문제12 1~99까지 369 게임");
+//		System.out.println("1~99사이 임의의 숫자를 입력하시오");
+//		
+//		Scanner tn1 = new Scanner(System.in);
+//		double tnum1 = tn1.nextDouble();
+//		int tenn1 = (int)(tnum1/10); // 십의 자리
+//		int onen1 = (int)(tnum1%10); // 일의 자리
+//		
+//		if(tenn1%3 == 0 || (onen1%3 == 0 && onen1 != 0)) {
+//			System.out.printf("%d%d => 박수", tenn1, onen1);
+//		} else {
+//			System.out.printf("%d%d => %d%d", tenn1, onen1, tenn1, onen1);
+//		}
+		
         
         // 문제13
         // 사각형의 한쪽 모서리 : x1:10, y1:20
         // 반대편 모서리 : x2:90, y2:100
         // 입력받은 두 수를 좌표로 하는 점이 사각형에 겹치는가
 		
+		//사각형 좌표 : (10,20) (90,20) (10,100) (90,100)
+		//겹칠경우 : 임의의 x,y 좌표가 (10 <= x <= 90 && 20 <= y <= 100) 
+		
+		System.out.println("문제13 (10,20) (90,20) (10,100) (90,100) 사각형에 임의의 좌표가 겹치는가 ");
+		System.out.println("x좌표와 y좌표를 입력하시오");
+		
+		Scanner sx = new Scanner(System.in);
+		Scanner sy = new Scanner(System.in);
+		int ranx = sx.nextInt();
+		int rany = sy.nextInt();
+		
+		if(10 <= ranx && ranx <= 90 && 20 <= rany && rany <= 100) {
+			System.out.printf("좌표(%d, %d)는 사각형에 겹침", ranx, rany);
+		} else {
+			System.out.printf("좌표(%d, %d)는 사각형에 겹치지 않음", ranx, rany);
+		}
 		
 	}
 
