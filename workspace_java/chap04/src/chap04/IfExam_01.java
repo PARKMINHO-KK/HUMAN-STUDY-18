@@ -288,7 +288,7 @@ public class IfExam_01 {
         // 임의 세 수 x, y, z를 받아서
         // z가 x~y 사이에 있는지(포함) 판단
 		
-		//-------------------xyz입력창 출력-----------------------
+//		//-------------------xyz입력창 출력-----------------------
 //		System.out.println("x값:");
 //		System.out.println("y값:");
 //		System.out.println("z값:");
@@ -312,7 +312,7 @@ public class IfExam_01 {
 ////		} else if (y0 > x0) { // 이것도 조건 잘못 설정함
 ////			System.out.println((y0 >= z0 && z0 >= x0)+" z는 y와 x사이에 존재함");
 //		} else {System.out.println(" z는 x와 y사이에 존재하지 않음");}				
-		//---------------------------------------------------------
+//		//---------------------------------------------------------
         
         // 문제7
         // 月을 입력 받아서
@@ -385,7 +385,7 @@ public class IfExam_01 {
 //		} else if(deg > 0) { // 입력값이 양수일 때
 //			System.out.println("영상 " + deg + "도 입니다");
 //		} else { // 입력값이 음수일 때
-//			System.out.println("영하 " + deg*-1 + "도 입니다");
+//			System.out.println("영하 " + (deg*-1) + "도 입니다");
 //		}
 //		//------------------------------------
         
@@ -464,8 +464,10 @@ public class IfExam_01 {
 		Scanner sy = new Scanner(System.in);
 		int ranx = sx.nextInt();
 		int rany = sy.nextInt();
+		int x10 = 10, x20 = 90;
+		int y10 = 20, y20 = 100;
 		
-		if(10 <= ranx && ranx <= 90 && 20 <= rany && rany <= 100) {
+		if(x10 <= ranx && ranx <= x20 && y10 <= rany && y20 <= 100) {
 			System.out.printf("좌표(%d, %d)는 사각형에 겹침", ranx, rany);
 		} else {
 			System.out.printf("좌표(%d, %d)는 사각형에 겹치지 않음", ranx, rany);
