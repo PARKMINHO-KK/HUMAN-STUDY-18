@@ -131,7 +131,8 @@ public class ArrayExam_02 {
 		q2[1] = 12;
 		q2[2] = 8;
 		
-		int[] qq2 = new int[3];
+//		int[] qq2 = new int[3];
+		int[] qq2 = new int[q2.length];
 //		for(int i=0; i<qq2.length; i++) {
 //			qq2[i] = q2[i];
 //			System.out.println("문제2: qq2["+ i +"] => "+  qq2[i]);
@@ -158,7 +159,7 @@ public class ArrayExam_02 {
 		int[] q4 = {3, 4, 7, 5, 1, 4, 6};
 		int count = 0;
 		for(int i=0; i<q4.length; i++) { // 문제 4-1
-			if((q4[i]+2)%2 == 1) {
+			if(q4[i]%2 == 1) {
 				count++;
 			}
 		}
@@ -186,17 +187,19 @@ public class ArrayExam_02 {
 		int[] input = {1,2,3,4,5};
 		int[] finish = {2,4,5,1};
 		
-		while () {}
 		
-//		for(int i=0; i<input.length; i++) {
-//			for(int j=0; j<finish.length; j++) {
-//				if(input[i] == finish[j]) {
-//					input[i] = 0;					
-//				} else if(input[i] != 0){
-//					System.out.println("완주 실패 선수: "+ input[i] + "번");
-//				}
-//			}
-//		}
+		for(int i=0; i<input.length; i++) {
+			boolean flag = false;
+			for(int j=0; j<finish.length; j++) {
+				if(input[i] == finish[j]) {
+					flag = true;				
+				} 
+			}
+			if(flag != true){
+				System.out.println("완주 실패 선수: "+ input[i] + "번");
+				break;
+			}
+		}
 //			if(input[i] != finish[i]) {
 //				System.out.println("완주 실패 선수: "+ input[i] + "번");
 //			}
@@ -206,15 +209,21 @@ public class ArrayExam_02 {
 		// 문제6
 		// {3, 4, 7, 5, 1, 4, 6}
 		// 여기서 가장 큰 수 찾기
+		//for(int i=0; i<num7.length; i++) { // 잘못한거
+		//for(int j=0; j<num7.length; j++) { // 잘못한거
+//			if(num7[i]>num7[j]) {					
+//				System.out.println(num7[i]>num7[j]); // 값이 너무많이 나옴 변수도 하나더 있어야
+//			}
+		//}
+		//}
 		int[] num7 = {3, 4, 7, 5, 1, 4, 6};
+		int big = 0;
 		for(int i=0; i<num7.length; i++) {
-			for(int j=0; j<num7.length; j++) {
-				if(num7[i]>num7[j]) {					
-					System.out.println(num7[i]>num7[j]);
-				}
+			if(num7[i] > big) {
+				big = num7[i];
 			}
 		}
-		
+		System.out.println("가장 큰 수는: "+ big);
 		
 	}
 
