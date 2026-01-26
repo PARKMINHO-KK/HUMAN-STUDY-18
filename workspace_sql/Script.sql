@@ -627,4 +627,211 @@ SELECT EMPNO, ENAME, SAL, --Q2
 	ROUND(SAL/21.5/8, 1) AS TIME_PAY
 FROM EMP ;
 
-	
+SELECT ename , LENGTH(ename) FROM emp;
+
+SELECT sum(comm) FROM emp;
+
+SELECT sum(sal) FROM emp;
+
+SELECT count(sal) FROM emp;
+SELECT count(comm) FROM emp;
+SELECT count(*) FROM emp;
+
+SELECT COUNT(*) FROM emp
+WHERE deptno = 30;
+
+SELECT max(sal) FROM emp;
+SELECT min(sal) FROM emp;
+
+SELECT 
+	max(sal), min(sal), min(hiredate), min(comm),
+	count(*), sum(sal)
+FROM emp;
+
+SELECT avg(sal) FROM emp;
+
+-- 이름에 a가 들어가는 사람은 몇명?
+-- 'a'
+
+SELECT count(*) FROM emp
+WHERE lower(ename) LIKE lower('%a%');
+
+SELECT DISTINCT deptno FROM emp;
+
+-----------------
+-- group by
+/* 
+ *  제약 1. select에는 group by에 적은 컬럼 명만 가능하다
+ *  제약 2. select에 집계함수는 가능하다
+ */
+SELECT deptno
+FROM emp
+GROUP BY deptno;
+
+SELECT deptno, count(*), sum(sal)
+FROM EMP
+GROUP BY deptno;
+
+SELECT deptno, job
+FROM EMP
+GROUP BY deptno, job;
+
+SELECT deptno, job, count(*)
+FROM EMP
+GROUP BY deptno, job;
+
+/* group function is not allowed here
+SELECT * FROM EMP
+WHERE avg(sal) < sal;
+*/
+
+SELECT deptno, job 
+FROM EMP
+WHERE deptno = 10
+GROUP BY deptno, job;
+
+SELECT deptno, job 
+FROM EMP
+--WHERE deptno = 10
+GROUP BY deptno, job
+HAVING deptno = 10;
+
+SELECT deptno, job, avg(sal)
+FROM EMP
+GROUP BY deptno, job;
+
+SELECT deptno, job, avg(sal)
+FROM EMP
+GROUP BY deptno, job
+HAVING avg(sal) > 2000;
+
+-- job별로 3명 이상인 job과 count(*)를 표시
+SELECT job, count(*)
+FROM EMP
+GROUP BY job
+HAVING count(*) >= 3;
+
+-- 실행 순서
+/* 5 */ SELECT job, 1 AS num
+/* 1 */ FROM emp
+/* 2 */ WHERE sal > 1000
+/* 3 */ GROUP BY job
+/* 4 */ HAVING count(*) >= 3
+/* 6 */ ORDER BY num DESC;
+
+SELECT * FROM dept;
+SELECT * FROM EMP;
+
+-- 모든 조합이 다 나온다
+SELECT *
+FROM emp, dept
+ORDER BY empno;
+
+-- SMITH의 deptno만 emp에서 출력
+SELECT deptno FROM EMP e WHERE ename = 'SMITH';
+-- dept에서 deptno가 20인 줄 모든 컬럼 출력
+SELECT * FROM dept WHERE deptno = 20;
+
+-- where로 필요한 것만 뽑는다
+SELECT *
+FROM emp, DEPT
+WHERE emp.deptno = dept.deptno;
+
+-- 별칭을 주면 다음부터 별칭으로만 쓸 수 있음
+SELECT *
+FROM emp e, dept d
+-- WHERE emp.deptno = d.deptno;
+WHERE e.deptno = d.deptno;
+
+-- deptno를 두 테이블 모두 들고있어서 애매하다는 에러가 뜸
+SELECT ename, deptno
+FROM emp e, dept d
+-- WHERE emp.deptno = d.deptno;
+WHERE e.deptno = d.deptno;
+
+SELECT ename, e.deptno, e.*
+FROM emp e, dept d
+-- WHERE emp.deptno = d.deptno;
+WHERE e.deptno = d.deptno;
+
+SELECT * FROM salgrade;
+
+-- 800
+SELECT sal FROM emp WHERE ename = 'SMITH';
+
+SELECT ename, sal, grade, losal, hisal
+FROM emp e, SALGRADE s
+WHERE e.sal >= s.losal AND e.sal <= s.hisal;
+
+--7902
+SELECT mgr FROM emp WHERE ename = 'SMITH';
+SELECT * FROM emp WHERE empno = 7902;
+
+
+-- king은 mgr이 null이어서 결과에서 빠졌다
+SELECT  e1.empno, e1.ename, e1.mgr,
+		e2.empno, e2.ename, e2.mgr
+FROM emp e1, emp e2
+WHERE e1.mgr = e2.empno;
+
+SELECT *
+FROM emp e NATURAL JOIN dept 9;
+
+SELECT d.DEPTNO, d.*
+FROM emp e JOIN dept d on(e.deptno = d.deptno)
+WHERE sal <= 2000;
+
+SELECT * 
+FROM  emp e1 JOIN emp e2 on(e1.mgr = e2.empno);
+
+-- left outer join기준 왼쪽 테이블을 모두 나오게 함.
+SELECT * 
+FROM  emp e1 LEFT OUTER JOIN emp e2 on(e1.mgr = e2.empno);
+
+SELECT * 
+FROM  emp e1 RIGHT OUTER JOIN emp e2 on(e1.mgr = e2.empno);
+
+SELECT * 
+FROM  emp e1 FULL OUTER JOIN emp e2 on(e1.mgr = e2.empno);
+
+-- 퀴즈
+-- 각 부서별로
+-- 가장 높은 급여,
+-- 가장 낮은 급여, 
+-- 급여 차액,
+-- 부서 번호
+-- 힌트 : 결과는 총 3줄
+SELECT deptno, max(sal), min(sal), MAX(sal) - min(sal)
+FROM emp
+GROUP BY deptno;
+
+
+-- 교재 226페이지 1~4번
+-- Q1
+SELECT e.deptno, d.dname, e.empno, e.ename, e.sal
+FROM dept d, EMP e
+WHERE e.deptno = d.deptno
+and e.sal > 2000;
+
+-- Q2
+SELECT e.deptno, d.dname, FLOOR(avg(e.sal)) AS AVG_SAL, max(e.sal) AS MAX_SAL, min(e.sal) AS MIN_SAL, COUNT(*) AS CNT
+FROM EMP E, DEPT D
+WHERE e.deptno = d.deptno
+GROUP BY e.deptno, d.dname;
+
+-- Q3
+SELECT d.DEPTNO, d.dname, e.EMPNO, e.ENAME, e.job, e.sal
+FROM emp e FULL OUTER JOIN dept d on(e.deptno = d.deptno);
+
+-- Q4
+SELECT d.deptno, d.dname, e.EMPNO, 
+		e.ename, e.mgr, e.sal, 
+		e.deptno AS DEPTNO_1,
+		s.losal, s.hisal, s.grade, 
+		e.mgr AS mgr_empno, 
+		e1.ename AS mgr_ename
+FROM dept d left OUTER JOIN emp e ON(e.deptno = d.deptno)
+		LEFT OUTER JOIN salgrade s ON(e.sal >= s.losal AND e.sal <= s.hisal)
+		LEFT OUTER JOIN emp e1 ON(e.mgr = e1.empno)
+ORDER BY d.DEPTNO, e.empno;
+
