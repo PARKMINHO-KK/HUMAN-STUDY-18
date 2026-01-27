@@ -811,7 +811,8 @@ GROUP BY deptno;
 SELECT e.deptno, d.dname, e.empno, e.ename, e.sal
 FROM dept d, EMP e
 WHERE e.deptno = d.deptno
-and e.sal > 2000;
+and e.sal > 2000
+ORDER BY e.deptno, job;
 
 -- Q2
 SELECT e.deptno, d.dname, FLOOR(avg(e.sal)) AS AVG_SAL, max(e.sal) AS MAX_SAL, min(e.sal) AS MIN_SAL, COUNT(*) AS CNT
@@ -821,7 +822,8 @@ GROUP BY e.deptno, d.dname;
 
 -- Q3
 SELECT d.DEPTNO, d.dname, e.EMPNO, e.ENAME, e.job, e.sal
-FROM emp e FULL OUTER JOIN dept d on(e.deptno = d.deptno);
+FROM emp e FULL OUTER JOIN dept d on(e.deptno = d.deptno)
+ORDER BY deptno, ename;
 
 -- Q4
 SELECT d.deptno, d.dname, e.EMPNO, 
@@ -834,4 +836,314 @@ FROM dept d left OUTER JOIN emp e ON(e.deptno = d.deptno)
 		LEFT OUTER JOIN salgrade s ON(e.sal >= s.losal AND e.sal <= s.hisal)
 		LEFT OUTER JOIN emp e1 ON(e.mgr = e1.empno)
 ORDER BY d.DEPTNO, e.empno;
+
+
+
+----------------------------------------
+-- 서브쿼리
+----------------------------------------
+
+SELECT *
+FROM EMP
+--WHERE sal > 2975;
+WHERE sal > (SELECT SAL 
+			 FROM EMP
+			 WHERE ename = 'JONES');
+
+SELECT *
+FROM EMP
+WHERE HIREDATE < 	(SELECT HIREDATE 
+				 	 FROM EMP
+					 WHERE ename = 'SCOTT');
+
+
+SELECT *
+FROM emp
+WHERE sal > (SELECT avg(sal) FROM emp);
+
+SELECT max(sal) FROM EMP 
+GROUP BY deptno;
+
+SELECT * FROM emp
+WHERE sal IN (2850, 3000, 5000);
+
+SELECT * FROM emp
+WHERE sal IN (SELECT max(sal) FROM EMP 
+			  GROUP BY deptno);
+
+SELECT *
+FROM (	SELECT deptno, ename 
+		FROM emp 
+		WHERE deptno = 10) e10, dept d
+WHERE e10.deptno = d.deptno;
+
+SELECT job, count(*)
+FROM EMP
+GROUP BY job
+HAVING count(*) >= 3;
+
+-- cnt는 select에서 동작하고
+-- where는 그 전에 실행된다
+SELECT job, count(*) cnt
+FROM EMP
+WHERE cnt >= 3
+GROUP BY job;
+
+SELECT *
+FROM (	SELECT job, count(*) cnt
+		FROM EMP
+		GROUP BY job)
+WHERE cnt >= 3;
+
+SELECT rownum, e.*
+FROM emp e;
+
+SELECT rownum, e.*
+FROM emp e
+ORDER BY sal;
+
+-- 깜짝퀴즈
+-- 연봉 오름차순으로 정렬된채로 줄번호 적용
+/* 오답
+ * SELECT e.*
+FROM emp e (	SELECT rownum 
+				FROM emp )
+ORDER BY e.sal;
+ */
+-- 정답
+SELECT rownum, e.*
+FROM (	SELECT * 
+		FROM emp
+		ORDER BY sal) e;
+-- WHERE rownum = 6; -- rownum 자체가 의미가 있다
+
+-- 작동순서가 rnum보다 where가 빨라서 에러남
+SELECT rownum rnum, e.*
+FROM (	SELECT * 
+		FROM emp
+		ORDER BY sal) e
+WHERE rnum = 6;
+
+-- select를 하나더 써서 순서를 맞춰준다
+SELECT *
+FROM (
+	SELECT rownum rnum, e.*
+	FROM (	
+		SELECT * FROM emp
+		ORDER BY sal
+	) e
+)
+WHERE rnum >= 6 AND rnum <= 10;
+
+WITH e10 AS (
+	SELECT * FROM emp WHERE deptno = 10
+)
+SELECT * FROM e10;
+
+SELECT 
+	sal,
+	ename,
+	(SELECT 
+		grade
+	FROM SALGRADE
+	WHERE e.sal BETWEEN losal AND hisal) grade
+FROM emp e;
+
+-- 문제1
+-- 커미션(comm)이 null인 사원을 급여 내림차순으로 정렬
+SELECT *
+FROM EMP
+WHERE comm is NULL
+ORDER BY sal desc;
+
+-- 문제2
+-- 급여 등급 별 사원 수를 등급 오름차순으로 정렬
+-- 출력결과 : 등급, 몇 명
+SELECT grade, count(*)
+FROM SALGRADE s, EMP e
+WHERE e.sal >= s.losal
+	AND e.sal <= s.hisal
+group BY grade
+ORDER BY grade;
+
+-- 문제3
+-- 출력 : 이름, 급여, 급여 등급, 부서이름
+-- 급여등급 3 이상만, 급여 등급 내림차순
+-- 급여등급이 같은 경우 급여 내림 차순
+SELECT ename, sal, grade, dname
+FROM EMP e, SALGRADE s, DEPT d
+WHERE e.DEPTNO = d.DEPTNO 
+	AND e.sal >= s.LOSAL 
+	AND e.SAL <= s.HISAL 
+	AND s.GRADE >= 3
+ORDER BY grade DESC, sal desc;
+
+-- 문제4
+-- 부서명이 sales인 사원 중
+-- 급여 등급이 2 또는 3인 사원의 급여를 내림차순으로 정렬
+SELECT *
+FROM EMP e, SALGRADE s, DEPT d
+WHERE e.DEPTNO = d.DEPTNO 
+	AND e.sal >= s.LOSAL 
+	AND e.SAL <= s.HISAL
+	AND d.dname = 'SALES'
+	AND grade >= 2
+	AND grade <= 3
+ORDER BY sal DESC;
+
+-- page249
+-- Q1
+SELECT job, empno, ename, e.sal, d.deptno, dname
+FROM EMP e , DEPT d 
+WHERE e.DEPTNO = d.DEPTNO
+	AND e.job = (
+				SELECT job
+				FROM EMP
+				WHERE ename = 'ALLEN'
+				);
+
+-- Q2
+SELECT empno, ename, dname, hiredate, loc, sal, grade
+FROM EMP e , DEPT d , SALGRADE s 
+WHERE e.DEPTNO = d.DEPTNO 
+	AND e.sal >= s.LOSAL 
+	AND e.SAL <= s.HISAL
+	AND e.sal > (SELECT avg(sal)
+				FROM emp)
+ORDER BY sal DESC;
+
+-- Q3
+SELECT empno, ename, job, e.deptno, dname, LOC
+FROM EMP e , DEPT d 
+WHERE e.DEPTNO = d.DEPTNO 
+	AND e.deptno = 10
+	AND e.job NOT IN (
+				SELECT e.job 
+				FROM emp e
+				WHERE e.deptNO = 30
+				);
+
+-- Q4
+SELECT empno, ename, sal, grade
+FROM EMP e , SALGRADE s 
+WHERE e.sal >= s.LOSAL
+	AND e.SAL <= s.HISAL
+	AND e.sal > (
+				SELECT max(sal)
+				FROM EMP
+				WHERE job = 'SALESMAN'
+				)
+ORDER BY e.empno;
+
+
+
+
+--------------------------------
+-- 12장
+--------------------------------
+DESC emp; -- dbeaver에서 안된다(근데 원래 되야함)
+SELECT * FROM emp;
+
+CREATE TABLE emp_ddl (
+    empno number(4),
+    ename varchar2(10), 
+    job varchar2(9), 
+    mgr  number(4),
+    hiredate DATE,
+    sal number(7,2),
+    comm number(7,2),
+    deptno number(2)
+);
+SELECT * FROM emp_ddl;
+
+CREATE TABLE dept_ddl
+AS SELECT * FROM dept;
+
+SELECT * FROM dept_ddl;
+
+CREATE TABLE emp_ddl_30
+AS SELECT * FROM emp WHERE deptno = 30;
+SELECT * FROM emp_ddl_30;
+
+CREATE TABLE empdept_ddl
+AS 
+SELECT empno, ename, job job2, d.deptno, dname
+FROM emp e, dept d
+WHERE 1 <> 1;
+
+SELECT * FROM empdept_ddl;
+
+CREATE TABLE emp_alter
+AS SELECT * FROM emp;
+
+SELECT * FROM emp_alter;
+
+ALTER TABLE emp_alter
+ADD hp varchar2(20);
+SELECT * FROM emp_alter;
+
+ALTER TABLE emp_alter
+RENAME COLUMN hp TO tel;
+SELECT * FROM emp_alter;
+
+ALTER TABLE emp_alter
+MODIFY empno number(5);
+-- 크기는 늘어나는 경우만 가능. 줄어들지 못함
+-- 다른 타입으로 변경할 경우 모든 값이 null일 때만 가능하다
+
+ALTER TABLE emp_alter
+DROP COLUMN tel;
+SELECT * FROM emp_alter;
+
+RENAME emp_alter TO emp_rename;
+SELECT * FROM emp_rename;
+
+TRUNCATE TABLE emp_rename;
+
+DROP TABLE emp_rename;
+
+--------------------------------
+-- 10장
+--------------------------------
+CREATE TABLE dept_temp
+AS SELECT * FROM dept;
+
+SELECT * FROM dept_temp;
+
+INSERT INTO dept_temp (deptno, dname, loc)
+VALUES (50, 'DATABASE', 'SEOUL');
+SELECT * FROM dept_temp;
+
+INSERT INTO dept_temp
+VALUES (60, 'NEtwork', 'BUSAL');
+SELECT * FROM dept_temp;
+
+INSERT INTO dept_temp
+VALUES (70, 'WEB', null);
+SELECT * FROM dept_temp;
+
+-- ''도 null 취급
+INSERT INTO dept_temp
+VALUES (80, 'MOBILE', '');
+SELECT * FROM dept_temp;
+
+INSERT INTO dept_temp (deptno, loc)
+VALUES (90, 'incheon');
+SELECT * FROM dept_temp;
+
+CREATE TABLE emp_temp
+AS SELECT * FROM emp WHERE 1 <> 1;
+SELECT * FROM emp_temp;
+
+INSERT INTO emp_temp (empno, ename, hiredate)
+VALUES (999, '홍길동', '2026/01/27');
+SELECT * FROM emp_temp;
+
+INSERT INTO emp_temp (empno, ename, hiredate)
+VALUES (7051, '최민수', to_date('2026/01/27', 'yyy-mm-dd'));
+SELECT * FROM emp_temp;
+
+INSERT INTO emp_temp (empno, ename, hiredate)
+VALUES (3111, '심청이', sysdate);
+SELECT * FROM emp_temp; 
 
