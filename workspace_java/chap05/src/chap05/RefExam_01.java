@@ -44,11 +44,11 @@ public class RefExam_01 {
 		
 		// null : 참조하는 주소가 없는 상태
 		String addr = "천안";
-		System.out.println("addr == nill : "+ (addr == null));
-		System.out.println("addr != nill : "+ (addr != null));
+		System.out.println("addr == null : "+ (addr == null));
+		System.out.println("addr != null : "+ (addr != null));
 		
 		String addr2 = ""; // null 아님
-		System.out.println("addr2 == nill : "+ (addr2 == null));
+		System.out.println("addr2 == null : "+ (addr2 == null));
 		
 		addr = null;
 		// "천안"과 연결이 끊어지고

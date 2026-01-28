@@ -1147,3 +1147,284 @@ INSERT INTO emp_temp (empno, ename, hiredate)
 VALUES (3111, '심청이', sysdate);
 SELECT * FROM emp_temp; 
 
+INSERT INTO EMP_TEMP 
+SELECT * FROM emp WHERE deptno = 10;
+SELECT * FROM emp_temp;
+
+INSERT ALL
+INTO EMP_TEMP (empno, ename, hiredate)
+	VALUES (3112, '심청이2', sysdate)
+INTO EMP_TEMP (empno, ename, hiredate)
+	VALUES (3113, '심청이3', sysdate)
+SELECT * FROM dual;
+
+SELECT * FROM emp_temp;
+
+--------------------------------------------------
+-- update
+--------------------------------------------------
+CREATE TABLE dept_temp2
+AS SELECT * FROM dept;
+SELECT * FROM dept_temp2;
+
+UPDATE dept_temp2
+SET loc = 'seoul';
+SELECT * FROM dept_temp2;
+
+ROLLBACK;
+
+-- update, delete 실행 하기 전에 
+-- where를 무조건 검증해보기
+SELECT * FROM dept_temp2
+WHERE deptno = 40;
+
+UPDATE dept_temp2
+SET dname = 'DATABASE', loc = 'SEOUL'
+WHERE deptno = 40;
+SELECT * FROM dept_temp2;
+
+UPDATE dept_temp2
+SET dname = (SELECT dname
+			FROM DEPT
+			WHERE deptno = 40),
+	loc = (SELECT Loc
+			FROM DEPT
+			WHERE deptno = 40)
+WHERE deptno = 40;
+SELECT * FROM dept_temp2;
+
+CREATE TABLE EMP_tmp
+AS SELECT * FROM emp;
+SELECT * FROM emp_tmp;
+
+SELECT sal, sal * 1.08 FROM emp_tmp
+WHERE sal < 1000;
+
+UPDATE emp_tmp
+SET sal = sal * 1.08
+WHERE sal < 1000;
+
+SELECT * FROM emp_tmp
+WHERE ename IN ('SMITH', 'JAMES');
+
+CREATE TABLE emp_temp2
+AS SELECT * FROM emp;
+
+DELETE FROM emp_temp2
+WHERE job = 'MANAGER';
+
+SELECT * FROM emp_temp2;
+
+DELETE FROM emp_temp2;
+SELECT * FROM emp_temp2;
+
+ROLLBACK;
+
+DELETE FROM emp_temp2
+WHERE job = 'MANAGER';
+
+COMMIT;
+ROLLBACK;
+SELECT * FROM emp_temp2;
+
+-----------------------------------------
+-- 13장
+-----------------------------------------
+
+SELECT * FROM dict;
+SELECT * FROM user_tables;
+
+-----------------------------------------
+-- index --
+-----------------------------------------
+
+CREATE INDEX IDX_EMP_SAL
+ON EMP (SAL ASC);
+
+SELECT * FROM USER_INDEXES;
+SELECT * FROM USER_IND_COLUMNS;
+
+SELECT /*+ index(e idx_emp_sal)   */ -- 강제HINT
+	ename, sal
+FROM emp e
+WHERE sal = 3000;
+
+CREATE VIEW vw_emp20
+AS (SELECT empno, ename, job, deptno
+	FROM EMP
+	WHERE deptno = 20);
+
+SELECT * FROM vw_emp20;
+
+SELECT * FROM vw_emp20
+WHERE job = 'CLERK';
+
+CREATE TABLE dept_seq
+AS SELECT * FROM dept WHERE 1 != 1;
+SELECT * FROM dept_seq;
+
+CREATE SEQUENCE seq_dept;
+
+SELECT * FROM USER_sequences;
+
+-- 다음 값
+SELECT seq_dept.nextval FROM dual;
+SELECT seq_dept.nextval FROM dual;
+
+-- 현재 값
+-- 생성 후에 nextval 한번은 실행하고나서
+-- currval 사용 가능
+SELECT seq_dept.currval FROM dual;
+
+CREATE SEQUENCE seq_dept_10
+START WITH 10
+INCREMENT BY 10;
+
+SELECT seq_dept_10.nextval FROM dual;
+SELECT seq_dept_10.nextval FROM dual;
+SELECT seq_dept_10.nextval FROM dual;
+
+SELECT seq_dept_10.currval FROM dual;
+
+INSERT INTO dept_seq (deptno, dname, loc)
+VALUES (seq_dept_10.nextval, 'database', 'seoul');
+SELECT  * FROM dept_seq;
+
+INSERT INTO dept_seq (deptno, dname, loc)
+VALUES (seq_dept_10.nextval, 'database2', 'seoul');
+SELECT  * FROM dept_seq;
+
+-----------------------------------------
+-- 제약 조건 --
+-----------------------------------------
+
+-- 방법1 
+-- primary key를 두개 이상 줄 수 없다
+CREATE TABLE table_pk (
+	login_id varchar2(20) PRIMARY KEY,
+	login_pw varchar2(20) NOT NULL,
+	tel varchar2(20)
+);
+SELECT * FROM table_pk;
+
+-- pk를 지정하면 index 자동 생성
+SELECT * FROM user_indexes;
+
+INSERT INTO table_pk
+VALUES ('id1', 'pw1', null);
+
+-- id 중복
+INSERT INTO table_pk
+VALUES ('id1', 'pw1', null);
+
+-- not null에 null추가
+INSERT INTO table_pk
+VALUES ('id2', null, null);
+
+INSERT INTO table_pk (login_id)
+VALUES ('id3');
+
+INSERT INTO table_pk (login_id)
+VALUES (null);
+
+SELECT * FROM table_pk;
+
+-- pk나 not null을 null로 변경
+UPDATE table_pk
+SET login_id = NULL
+WHERE login_id = 'id1';
+
+INSERT INTO table_pk
+VALUES ('id2', 'pw2', null);
+SELECT * FROM table_pk;
+
+-- pk를 중복되는 값으로 변경
+UPDATE table_pk
+SET login_id = 'id1'
+WHERE login_id = 'id2';
+
+-- 방법2
+-- pk 하나 이상 지정 가능
+CREATE TABLE table_pk2 (
+	login_id varchar2(20),
+	login_pw varchar2(20),
+	tel varchar2(20),
+	
+	PRIMARY KEY (login_id, login_pw)
+);
+SELECT * FROM table_pk2;
+
+-- 방법3
+CREATE TABLE table_pk4 (
+	login_id varchar2(20),
+	login_pw varchar2(20),
+	tel varchar2(20)
+);
+ALTER TABLE table_pk4
+ADD PRIMARY key(login_id, login_pw);
+
+ALTER TABLE table_pk4
+MODIFY login_id PRIMARY KEY;
+
+-----------------------------------------
+-- foreign key --
+----------------------------------------- 
+CREATE TABLE dept_fk(
+	deptno number(2) PRIMARY KEY,
+	dname varchar2(14),
+	loc varchar2(13)
+);
+CREATE TABLE emp_fk(
+	empno number(4) PRIMARY KEY,
+	ename varchar2(10),
+	deptno number(2) REFERENCES dept_fk(deptno)
+);
+-- null 됨(항상 됨)
+INSERT INTO emp_fk
+values(1, '이름2',null);
+
+-- 없는 값 안됨
+INSERT INTO emp_fk
+values(2, '이름2',1);
+
+INSERT INTO dept_fk
+VALUES (10, '부서', '위치');
+SELECT * FROM dept_fk;
+
+INSERT INTO emp_fk
+VALUES (2, '이름2', 10);
+
+INSERT INTO emp_fk
+VALUES (3, '이름3', 10);
+SELECT * FROM emp_fk;
+
+-- 없는 값으로 update 안됨
+UPDATE emp_fk
+SET deptno = 20
+
+-- 쳐다보고 있는 원본 값 삭제 안됨
+DELETE dept_fk
+WHERE deptno = 10;
+
+DROP TABLE dept_fk;
+
+UPDATE dept_fk
+SET deptno = 20
+WHERE deptno = 10;
+
+TRUNCATE TABLE dept_fk;
+
+WHERE deptno = 10;
+
+DELETE emp_fk
+WHERE deptno = 10;
+
+UPDATE dept_fk
+SET deptno = 20
+WHERE deptno = 10;
+
+
+
+
+
+

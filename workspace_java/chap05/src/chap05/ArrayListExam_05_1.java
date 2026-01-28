@@ -17,6 +17,7 @@ public class ArrayListExam_05_1 {
 		
 		String a1 = (String)list.get(0);
 		
+		System.out.println(a1);
 
 	}
 
