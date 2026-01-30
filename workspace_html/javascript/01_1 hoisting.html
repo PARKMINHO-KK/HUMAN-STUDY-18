@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        b = 200;
+        const d = 100;
+    // b = 20; // 호이스팅@@@@
+    // 아무것도 안쓰고 선언하면 js영역의 최상단으로 이동된다
+
+        console.log(b); // Uncaught ReferenceError: b is not defined 에러 발생
+        console.log(d);
+
+        function test(){
+            // // var a; // 이쪽으로 이동되고 선언문으로 바뀜
+
+            // // 이럴 때 문제 발생
+            // var a = 1;
+
+
+            if(true){
+                // 함수 실행 시 위로 이동한다
+                var a = 10; // 호이스팅 발생!
+                a = 10; // 그리고 요렇게 바뀐다
+                // var는 함수 최상단으로 호이스팅
+                b = 20; // 호이스팅 발생@@@@
+                //  후 스크립트 최상단으로 올라간다.
+                let c = 30;
+                const d = 40;
+            }
+            console.log('var a : ', a)
+            console.log('b : '+ b)
+            // 밖에 있는 a,b 출력 때문에 주석
+            // c, d는 지역변수
+            // console.log('let c : '+ c)
+            // console.log('const d : '+ d)
+        }
+
+        test();
+        // d=200;
+        // console.log('var a : ', a)
+        console.log('b : '+ b) // 여기는 원래 200 나와야하는데 호이스팅 때문에 20나옴
+        // console.log(d);
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

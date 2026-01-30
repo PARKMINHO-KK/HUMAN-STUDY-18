@@ -1374,11 +1374,19 @@ CREATE TABLE dept_fk(
 	dname varchar2(14),
 	loc varchar2(13)
 );
+
+-- references 지정방법 1
 CREATE TABLE emp_fk(
 	empno number(4) PRIMARY KEY,
 	ename varchar2(10),
 	deptno number(2) REFERENCES dept_fk(deptno)
 );
+
+-- references 지정방법 2
+
+-- references 지정방법 3
+
+
 -- null 됨(항상 됨)
 INSERT INTO emp_fk
 values(1, '이름2',null);
@@ -1422,7 +1430,6 @@ WHERE deptno = 10;
 UPDATE dept_fk
 SET deptno = 20
 WHERE deptno = 10;
-
 
 
 
