@@ -1431,7 +1431,15 @@ UPDATE dept_fk
 SET deptno = 20
 WHERE deptno = 10;
 
+--------------------------sql 평가----------------------------
+-- 문항 1
+SELECT (rpad(substr(empno, 1, 2), LENGTH(empno), '*')) AS empno, ename
+FROM EMP
+ORDER BY empno DESC;
 
-
-
+-- 문항 2
+SELECT empno, ename, dname, loc
+FROM emp e, dept d
+WHERE e.DEPTNO = d.DEPTNO 
+ORDER BY dname desc;
 
