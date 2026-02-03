@@ -220,6 +220,22 @@
         console.log(arr8.toString())
         console.log(''+arr8)
 
+        // 함수 배우고 와서
+        let arr9 = [1, 55, 66, 44, 879, 321]
+        // arr9.sort() // 오름차순
+        arr9.sort(function(x, y, a, b, c){
+            console.log(x, y, a, b, c)
+        })
+
+        // 내림 차순
+        arr9.sort(function(x, y){
+            return y - x
+        })
+        console.log(arr9)
+        
+        arr9.sort((x, y) => y - x)
+
+
     </script>
 </head>
 <body>

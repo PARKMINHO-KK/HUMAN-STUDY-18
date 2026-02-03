@@ -34,6 +34,66 @@
     }
 
     // 함수 배우고 올께요
+    console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@')
+
+    const arr2 = ['a1','a2','a3','a4']
+    // forEach : 각 항목별로 함수를 실행해 준다
+    // 현재값, 현재 index, 전체 배열
+    // return 없음
+    let r1 = arr2.forEach(function(element, index, array){
+        console.log('element : ', element)
+        console.log('index : ', index)
+        console.log('array : ', array)
+    })
+    console.log('r1 : ', r1)
+
+    const movies = [
+        '만약에 우리',
+        '신의 악단',
+        '아바타 불과재',
+        '주토피아2'
+    ]
+
+    let r2 = movies.map(function(el, i, arr){
+        console.log('-----------')
+        console.log('element :', el)
+        console.log('index :', i)
+        console.log('array :', arr)
+
+        return el.length
+        // if(el.length >= 6){
+        //    return el
+        //}
+    })
+    console.log('r2 :', r2)
+    // let r3 = movies.map (function(el){
+    //      return el.length
+    //})
+    // let r3 = movies.map ((el) => {
+    //      return el.length
+    //})
+    // let r3 = movies.map( el => {
+    //      return el.length
+    //})
+    let r3 = movies.map( el => el.length )
+    
+    let r4 = movies.filter(function(el, i, arr) {
+        console.log('-----------')
+        console.log('element :', el)
+        console.log('index :', i)
+        console.log('array :', arr)
+
+        // if (el.length >= 6) {
+        //     return true
+        // } else {
+        //     return false
+        // }
+
+        return el.length >= 6
+    })
+    console.log('r4 :', r4)
+    let r5 = movies.filter( el => el.length >= 6 )
+
 </script>
 <body>
     
