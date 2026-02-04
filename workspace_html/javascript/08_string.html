@@ -56,7 +56,47 @@
         str2 = str3.trim()
         console.log(`[${str2}]`)
 
-        
+        // 문제1
+        // 어떤 이메일이라도 id를 출력해보자
+        // 예) study.todair@gmail.com
+        let email = 'parkmino89@gmail.com'
+        let result = email.split('@')
+        let id = result[0]
+        console.log('id :', id)
+
+        // 문제2
+        // 보안상 이메일의 앞 두자리를 제외하고 * 처리
+        let arrid = id.split('')
+        console.log(arrid)
+        for(let i = 0; i<arrid.length; i++){
+            if(i < 2){
+                continue;
+            } else {
+                arrid[i] = '*'
+            }
+        }
+        let strid = arrid.join('')
+        console.log('id* :', strid)
+
+        // 문제3
+        // 인터넷 주소 중에서 2차 도메인 출력
+        let q3 = 'comic.naver.com'
+        let split3 = q3.split('.')
+        let result3 = split3[split3.length - 2]
+        console.log('2nd domain :', result3)
+
+        // 문제4
+        // url의 query string에서 검색어를 출력한다
+        // hint query=옆에있는 단어
+        let q4 = 'https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=1234&ackey=po4zpvmy'
+        // console.log(q4.split('query=')) // 확인용
+        let q41 = q4.split('query=')[1] // query= 뒷부분만 변수에 담기
+        let q42 = q41.split('&') // & 기준으로 나누기
+        console.log('search word :', q42[0]) // query= 뒷부분, & 앞부분 출력
+
+
+
+
 
     </script>
 </head>
