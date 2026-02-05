@@ -94,7 +94,31 @@
         let q42 = q41.split('&') // & 기준으로 나누기
         console.log('search word :', q42[0]) // query= 뒷부분, & 앞부분 출력
 
+        // 문제5
+        // 2026-02-05 09:14:38
+        // 월, 분을 출력하시오
 
+        let strTime = '2026-02-05 09:14:38'
+        let strSplit = strTime.split('-')
+        let strMin = strTime.split(':')
+        console.log(strSplit)
+        console.log(strMin)
+        console.log('월 :', strSplit[1])
+        console.log('분 :', strMin[1])
+
+        // 문제6
+        // "   abc  "
+        // 공백의 개수는?
+
+        let strQ6 = "   abc  "
+        let count = 0
+
+        for(let i=0; i<strQ6.length; i++){
+            if(strQ6[i] == ' ') {
+                count++
+            }
+        }
+        console.log('공백의 개수 :', count)
 
 
 
