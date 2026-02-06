@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>12_async</title>
+    <script>
+        function fn1(){
+            console.log('fn1 실행')
+
+            fn2()
+            console.log('fn2 호출 끝')
+        }
+        function fn2(){
+            console.log('fn2 실행')
+
+            
+            fn3()
+
+            console.log('중간에 낀 것1')
+            setTimeout(function(){
+                console.log('중간에 낀 것2')
+            }, 0)
+            setTimeout(function(){ // 동기화를 마출 수 있는 방법
+                console.log('중간에 낀 것3') 
+            }, 0) // 같은 시간은 주면 그 시간들중에 먼저 호출된 것을 출력
+
+            console.log('fn2 맨 마지막')
+        }
+        function fn3(){
+            console.log('fn3 실행')
+        }
+
+
+        fn1()
+
+
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

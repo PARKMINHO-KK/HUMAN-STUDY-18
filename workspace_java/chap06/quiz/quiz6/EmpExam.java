@@ -40,7 +40,13 @@ public class EmpExam {
 		emptable.addEmp(emp3);
 		emptable.addEmp(emp4);
 		
-		emptable.info();
+//		emptable.info(); // 모든 사원정보 출력
+//		
+//		emptable.compare(4000); // 6-1 매개변수보다 높은 연봉 사원 출력
+		
+		emptable.isMgr(2001); // 상사정보 출력
+		
+		
 		
 //		EmpTable emp4 = new EmpTable();
 		

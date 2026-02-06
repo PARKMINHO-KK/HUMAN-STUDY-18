@@ -39,6 +39,14 @@
         </tbody>
     </table>
 
+    <div class="quiz q1">미래님 최고다</div>
+
+    <div class ='quzi q2'>퀴즈2</div>
+    <div class ='quzi q2-1'>퀴즈2-1</div>
+    <div class ='quzi q2-2'>퀴즈2-2</div>
+    <div class ='quzi q2'></div>
+    <div class ='quzi q2-1'>퀴즈2-1</div>
+
 
     <script>
         const msg = document.getElementById('msg')
@@ -248,6 +256,55 @@
         let width_orig = "438.4px"
         let w2 = Number(width_orig.split('px')[0])
         clock.style.width = (w2 - 100) +"px"
+
+        // 문제 1
+        // 다음 html의 컨텐츠를 출력하고
+        // 화면 마지막에 '~냥'을 붙여서 표시한다
+        // <div class="quiz q1">미래님 최고다</div>
+        let q1 = document.querySelector('.q1')
+        let q11 = q1.innerText + '~냥'
+        console.log(q11)
+        
+
+
+        // 문제 2
+        // 다음 코드 중 클래스 q2가 들어가 있는 모든 태그의 갯수를 선택하시오
+        /*
+        <div class ='quzi q2'>퀴즈2</div>
+        <div class ='quzi q2-1'>퀴즈2-1</div>
+        <div class ='quzi q2-2'>퀴즈2-2</div>
+        <div class ='quzi q2'></div>
+        <div class ='quzi q2-1'>퀴즈2-1</div>
+        */
+
+        let q2 = document.querySelectorAll('.q2')
+        console.log(q2.length)
+
+        // 문제3
+        // 위 코드에서 클래스 q2를 가지는 태그의 글씨를 출력하시오
+        let q22 = q2[0].innerText
+        let q23 = q2[1].innerText
+        // console.log(q22)
+        // console.log(q23)
+        for(let i=0; i<q2.length; i++){
+            console.log(q2[i].innerText)
+        }
+        
+        // 문제4
+        // 위 코드에서 클래스 q2를 가지는 태그 중
+        // 글씨가 없는 태그의 내용을 '비어있음' 으로 바꾸자
+        for(let i=0; i<q2.length; i++){
+            // console.log('q2.length', q2.length)
+            // console.log('q2[i].innerText', q2[i].innerText)
+            // console.log('q2[i].innerText == ""', q2[i].innerText == "")
+            
+            if(q2[i].innerText == "") {
+                // console.log(1)
+                q2[i].innerText = "비어있음"
+            } else {
+                console.log(q2[i].innerText)
+            }
+        }
 
 
 
