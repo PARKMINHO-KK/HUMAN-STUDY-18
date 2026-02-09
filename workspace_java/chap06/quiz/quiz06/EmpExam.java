@@ -1,4 +1,4 @@
-package quiz6;
+package quiz06;
 
 public class EmpExam {
 
@@ -44,7 +44,7 @@ public class EmpExam {
 //		
 //		emptable.compare(4000); // 6-1 매개변수보다 높은 연봉 사원 출력
 		
-		emptable.isMgr(2001); // 상사정보 출력
+		emptable.isMgr(1001); // 상사정보 출력
 		
 		
 		

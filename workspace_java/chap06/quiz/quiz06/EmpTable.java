@@ -1,4 +1,4 @@
-package quiz6;
+package quiz06;
 
 import java.util.ArrayList;
 
@@ -63,7 +63,7 @@ public class EmpTable {
 				Integer a = emp.mgr;
 				if(a == null) {
 					System.out.println("상사없음");
-					a = 0;
+					a = -1;
 				}
 				for(int j=0; j<list.size(); j++) {
 					emp = list.get(j);
