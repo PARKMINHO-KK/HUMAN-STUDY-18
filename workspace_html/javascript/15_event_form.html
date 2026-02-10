@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="asset/js/15_event_form.js"></script>
+</head>
+
+<body>
+    <div id="log"></div>
+
+    <form action="https://search.naver.com/search.naver" id="from">
+        검색 : <input type="'text" id="id" name="query"><br>
+        사이트 : <select id="site">
+            <option value="1">네이버</option>
+            <option value="2">구글</option>
+        </select>
+        <br>
+        <input type="submit" value="검색">
+    </form>
+
+    <div id="parent">
+        부모
+        <div id="child1">자식1</div>
+        <div id="child2">자식2</div>
+    </div>
+
+    <table id="board" border="1">
+        <tr>
+            <td>
+                <input type="checkbox" class="chk" value="1">
+            </td>
+            <td class="title">제목1</td>
+            <td>작성자1</td>
+        </tr>
+        <tr>
+            <td>
+                <input type="checkbox" class="chk" value="2">
+            </td>
+            <td class="title">제목2</td>
+            <td>작성자2</td>
+        </tr>
+        <tr>
+            <td>
+                <input type="checkbox" class="chk" value="3">
+            </td>
+            <td class="title">제목3</td>
+            <td>작성자3</td>
+        </tr>
+    </table>
+    <br><br><br><br><br>
+
+    <!-- 문제1 -->
+    <div>
+        아이디 : <input type="text" id="id_q1"><br>
+        비밀번호 : <input type="password" id="pw"><br>
+        <br>
+        <div id="statu" style="color: red"></div>
+        <input type="button" id="login" value="로그인">
+    </div>
+
+    <br><br>
+
+    <!-- 문제2 -->
+    <div> 
+        <div type="title"><h2>피자주문</h2></div>
+        <div>피자 종류 선택</div>
+        <select id="pizza_select">
+            <option value="1">치즈피자</option>
+            <option value="2" selected>불고기피자</option>
+            <option value="3">페페로니피자</option>
+            <option value="4">콤비네이션피자</option>
+        </select>
+        <br><br>
+        <div class="pizza_size">
+            <h2>사이즈 선택</h2>
+            <label>
+                <input type="radio" name="size" value="18000" checked>small(18000)
+            </label>
+            <label>
+                <input type="radio" name="size" value="20000">middum(20000)
+            </label>
+            <label>
+                <input type="radio" name="size" value="22000">large(22000)
+            </label>
+            <br><br>
+        </div>
+        <div type="title"><h2>도우 엣지 선택</h2></div>
+        <label>
+            <input type="radio" name="edge" class="pizza_edge" value="0" checked>thin(0)
+        </label>
+        <label>
+            <input type="radio" name="edge" class="pizza_edge" value="0">치즈(0)
+        </label>
+        <label>
+            <input type="radio" name="edge" class="pizza_edge" value="0">고구마(0)
+        </label>
+        <label>
+            <input type="radio" name="edge" class="pizza_edge" value="0">에그타르트(0)
+        </label>
+        <label>
+            <input type="radio" name="edge" class="pizza_edge" value="0">소보로(0)
+        </label>
+        <br><br>
+        <div type="title"><h2>토핑(중복가능)</h2></div>
+        <label>
+            <input type="checkbox" name="topp" class="topping" value="2000">감자(2000)
+        </label>
+        <label>
+            <input type="checkbox" name="topp" class="topping" value="500">올리브(500)
+        </label>
+        <label>
+            <input type="checkbox" name="topp" class="topping" value="1000">페페로니(1000)
+        </label>
+        <label>
+            <input type="checkbox" name="topp" class="topping" value="2000">고구마(2000)
+        </label>
+        <label>
+            <input type="checkbox" name="topp" class="topping" value="5000">새우(5000)
+        </label>
+        <label>
+            <input type="checkbox" name="topp" class="topping" value="3000">베이컨(3000)
+        </label>
+        <label>
+            <input type="checkbox" name="topp" class="topping" value="500">파인애플(500)
+        </label>
+        <br><br>
+        <div id="price"></div>
+        <br>
+        <input type="button" id="button" value="확인" style="font-size: 1.5em;">
+    </div>
+</body>
+
+</html>

@@ -1,4 +1,4 @@
-package quiz6;
+package quiz06;
 
 public class Emp {
 
