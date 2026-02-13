@@ -175,6 +175,70 @@ function bind() {
 
     })
 
+    const btn5 = document.querySelector('#btn5')
+    btn5.addEventListener('click', async function () {
+
+        const url = 'https://jsonplaceholder.typicode.com/users'
+        const option = {
+            method: 'get'
+        }
+
+        // fetch(url, option)
+        // .then(function(response){
+        //     return response.json()
+        // })
+        // .then(function(json){
+        //     console.log(json)
+        // })
+        // .catch(function(error){
+        //     console.error(error)
+        // })
+        let response = await fetch(url, option)
+        let json = await response.json()
+        console.log(json)
+    })
+
+
+    const btn6 = document.querySelector('#btn6')
+    btn6.addEventListener('click', function () {
+
+        $.ajax({ // jQuery ajax 첫번째 방법
+            url: 'https://jsonplaceholder.typicode.com/users',
+            type: 'get',        // method
+            success: function(data){
+                console.log('성공')
+                // 자동으로 json으로 바뀌어 온다
+                console.log(data)
+            },
+            error: function(error){
+                console.log('실패')
+                console.log(error)
+            },
+            complete: function(){
+                console.log('무조건 실행')
+            }
+        })
+
+    })
+    
+    const btn7 = document.querySelector('#btn7')
+    btn7.addEventListener('click', function () {
+
+        $.ajax({ // jQuery ajax 두번째 방법
+            url: 'https://jsonplaceholder.typicode.com/users',
+            type: 'get'
+        }).done(function(data){
+                console.log('성공')
+                // 자동으로 json으로 바뀌어 온다
+                console.log(data)
+        }).fail(function(error){
+                console.log('실패')
+                console.log(error)
+        }).always(function(){
+                console.log('무조건 실행')
+        })
+    })
+    
 
 
 }

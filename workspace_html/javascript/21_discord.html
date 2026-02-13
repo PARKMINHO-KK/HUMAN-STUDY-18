@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>21_discord.html</title>
+    <script>
+
+        https://discord.com/api/webhooks/1471710221784187089/FOWJRxloi2ZOBiZm46d-vNa4m1BiSeJ32m1zdL_wx1EJobz8_NdjjUfBU16whJ7RZLNQ
+
+        window.addEventListener('load', function () {
+            discord();
+        })
+
+        function discord() {
+            const ask = document.querySelector('#ask')
+
+            ask.addEventListener('click', function () {
+                const textarea = document.querySelector('#prompt')
+                console.log(textarea.value)
+
+                const url = 'https://discord.com/api/webhooks/1471710221784187089/FOWJRxloi2ZOBiZm46d-vNa4m1BiSeJ32m1zdL_wx1EJobz8_NdjjUfBU16whJ7RZLNQ'
+
+                const xhr = new XMLHttpRequest()
+                xhr.open('post', url)
+
+                xhr.setRequestHeader('Content-Type', 'application/json')
+
+                const param = {
+                    'username': '양꼬치 40개 이용상',
+                    content: textarea.value
+                }
+                xhr.send(JSON.stringify(param))
+
+                xhr.onload = function(){
+                    console.log(xhr.responseText)
+                }
+            })
+        }
+
+        // window.addEventListener('load', function () {
+        //     discord();
+        // })
+
+        // function discord() {
+        //     const ask = document.querySelector('#ask')
+        //     ask.addEventListener('click', function () {
+        //         const prompt = document.querySelector('#prompt').value
+
+        //         const url = 'https://discord.com/api/webhooks/1471710221784187089/FOWJRxloi2ZOBiZm46d-vNa4m1BiSeJ32m1zdL_wx1EJobz8_NdjjUfBU16whJ7RZLNQ'
+
+        //         const xhr = new XMLHttpRequest()
+        //         xhr.open('post', url)
+        //         xhr.setRequestHeader('Content-Type', 'application/json')
+
+        //         const param = {
+        //             'username': '드디어 박민호', //80자 제한
+        //             'content': prompt,
+        //         }
+        //         xhr.send(JSON.stringify(param))
+
+        //         xhr.onload = function(){
+        //             console.log(xhr.responseText)
+        //         }
+        //     })
+        // }
+
+    </script>
+</head>
+
+<body>
+    <textarea id="prompt"></textarea>
+    <br><input type="button" id="ask" value="디코에올리기">
+</body>
+
+</html>
