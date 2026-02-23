@@ -31,7 +31,8 @@ public class AnimalExam {
 		Cat c1 = (Cat)a2;
 		c1.grooming();
 		
-		Dog d2 = (Dog)a2;
+		// java.lang.ClassCastException:
+//		Dog d2 = (Dog)a2; // 형변환이 잘못되었다는 에러 뜸, 실행해야 알 수 있음
 	}
 
 }
