@@ -18,6 +18,7 @@ public class Knight extends Character {
 		System.out.println("기본방어력: "+ dp);
 		System.out.println("무기공격력: "+ wp);
 		System.out.println("갑옷방어력: "+ amor);
+		System.out.println("attack: "+ attack);
 		System.out.println("-------------------------");
 	}
 	

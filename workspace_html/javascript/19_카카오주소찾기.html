@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>19_카카오주소찾기.html</title>
+    <script src="//t1.kakaocdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script>
+        window.onload = function () {
+            document.querySelector('#btn')
+                .addEventListener('click', function () {
+                    new kakao.Postcode({
+                        oncomplete: function (data) {
+                            console.log(data)
+                            document.querySelector('#addr').value = data.address
+                        }
+                    }).open();
+
+                })
+
+        }
+    </script>
+</head>
+
+<body>
+    주소 : <input type="text" id="addr" readonly="readonly">
+    <button type="button" id="btn">주소찾기</button>
+    <div id="cusAddr"></div>
+</body>
+
+</html>

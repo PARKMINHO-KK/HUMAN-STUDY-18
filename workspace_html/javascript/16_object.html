@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>16_object</title>
+    <script>
+        // const url = '15_event_form.html'
+        // const name = 'open 연습'
+        // let option = 'width=800,height=600'
+        // window.open(url, name, option)
+
+        console.log(location.href)
+        console.log(navigator.userAgent)
+
+        window.onload = () => {
+            document.querySelector('#btn1')
+                .addEventListener('click', ()=>{
+                    location.href = 'http://naver.com'
+                })
+            document.querySelector('#btn2')
+                .addEventListener('click', ()=>{
+                    location.reload()
+                })
+            document.querySelector('#btn3')
+                .addEventListener('click', ()=>{
+                    // history.back()
+                    history.go(-1)
+                })
+        }
+    </script>
+</head>
+<body>
+    <button type="button" id="btn1">네이버로 이동</button>
+    <button type="button" id="btn2">새로고침</button>
+    <button type="button" id="btn3">뒤로가기</button>
+    <input type="file">
+
+</body>
+</html>

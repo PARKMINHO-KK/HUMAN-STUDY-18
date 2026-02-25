@@ -22,11 +22,13 @@ public class Battle {
 		System.out.println("배틀을 시작합니다");
 		System.out.println("--------------------");
 		int count = 1;
-		int damage1 = c2.attack-c1.depend;
+		int damage1 = c2.attack - c1.depend;
 		int damage2 = c1.attack-c2.depend;
+		
 		do {
 			System.out.println("라운드: "+ count++);
 			if(c1.hp > 0 && c2.hp > 0) {
+				
 				c1.hp = c1.hp - damage1;
 				c1.info();
 				c2.hp = c2.hp - damage2;

@@ -5,7 +5,7 @@ public class Wizard extends Character {
 	void creat(int no) {
 		this.no = no;
 		job = "마법사";
-		hp = (int)(Math.random()*20) + 81; // 80~100
+		hp = (int)(Math.random()*20) + 20; // 80~100
 		ap = (int)(Math.random()*10) + 21; // 20~30;;
 		dp = (int)(Math.random()*5) + 6; // 5~10;
 		wp = 10;
