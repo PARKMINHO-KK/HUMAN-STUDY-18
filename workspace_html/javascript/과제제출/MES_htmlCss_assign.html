@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MES</title>
+    <script src="MES_htmlCss_assign.js"></script>
+    <link rel="stylesheet" href="MES_htmlCss_assign.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="container header-inner">
+            <div class="logo">HUMAN MES</div>
+            <nav class="nav">
+                <a href="#">공정현황</a>
+                <a href="#">재고조회</a>
+                <a href="MES_htmlCss_assign.html">할일목록</a>
+                <a href="#">로그인</a>
+            </nav>
+        </div>
+    </header>
+
+
+    <div class="content_title">
+        <h2>할일목록 만들기</h2>
+    </div>
+    <div class="content_body">
+        <span>입력 : </span>
+        <input type="text" id="todoText">
+        <input type="button" id="addList" value="추가">
+        <label>
+            <input type="checkbox" id="selectAll" style="margin-left: 20px" ;>전체 선택
+        </label>
+        <input type="button" id="selectDel" value="선택 삭제" style="margin-left: 20px;" k="delete">
+        <div>할일목록</div>
+        <div class="addedList"></div>
+    </div>
+
+    
+
+</body>
+
+</html>

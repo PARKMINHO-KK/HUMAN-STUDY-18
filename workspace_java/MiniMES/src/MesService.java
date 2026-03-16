@@ -1,10 +1,11 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class MesService {
 	
 	int orderNo;
 	
-	ArrayList workOrder;
+	List workOrderList = new ArrayList();
 
 	Material body = new Material("BODY", 30);
 	Material lid = new Material("LID", 30);
@@ -17,10 +18,12 @@ public class MesService {
 	
 //	WorkOrder wo = new WorkOrder(0, 0, null, 0);
 	
-	void addOrder() {
+	void addOrder(int pNo, String pName, int orderAmount) {
 		orderNo++;
 		
-		WorkOrder workOrder = new WorkOrder(orderNo, orderNo, null, orderNo);
+		WorkOrder workOrder = new WorkOrder(orderNo, pNo, pName, orderAmount);
+		workOrderList.add(workOrder);
+		
 	}
 	
 	
