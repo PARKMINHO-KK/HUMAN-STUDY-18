@@ -1443,3 +1443,29 @@ FROM emp e, dept d
 WHERE e.DEPTNO = d.DEPTNO 
 ORDER BY dname desc;
 
+-----------------------------스마트 팩토리MES 구축(Ⅰ)---------------------------------------------
+INSERT INTO tb_user
+VALUES (1, 'minho', '1111', '부산', '박민호', '010-7226-8108');
+
+INSERT INTO bill
+VALUES (1, CURRENT_TIMESTAMP, '카드', '기본반찬X', 10000, '1', '1');
+
+INSERT INTO payment
+VALUES ('1', '결제수단', '결제방식', '1');
+UPDATE payment
+SET pay_seq = '1'
+WHERE pay_seq = 1;
+
+INSERT INTO ord_menu
+VALUES ('1', '토마토피자', 'L', 10000, NULL, 0, 1, 10000, 1, 1);
+
+INSERT INTO shop
+VALUES (1, '민호피자', '041-123-4567', '천안');
+
+INSERT INTO shop_menu
+VALUES (1, '토마토피자', 'L', 10000, NULL, 0, 1);
+
+SELECT *
+FROM tb_user, bill, payment, ord_menu, shop, shop_menu;
+
+SELECT * FROM user_tables;

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ajax.html</title>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
+	$.ajax({
+		url: '/proj02_request/req',
+		type: 'get'
+	}).done(function(data){
+		console.log(data)
+	}).fail(function(error){
+		console.log(error)
+	}).always(function(error){
+		console.log('무조건 실행')
+	})
+</script>
+</head>
+<body>
+
+</body>
+</html>
