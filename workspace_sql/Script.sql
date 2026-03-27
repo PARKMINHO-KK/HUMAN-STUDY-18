@@ -1469,3 +1469,59 @@ SELECT *
 FROM tb_user, bill, payment, ord_menu, shop, shop_menu;
 
 SELECT * FROM user_tables;
+
+CREATE TABLE todo (
+    todo_id NUMBER PRIMARY KEY,
+    duedate DATE,
+    done NUMBER DEFAULT 0,
+    content varchar2(4000),
+    ctime DATE 
+);
+
+CREATE SEQUENCE seq_todo;
+
+INSERT INTO todo (todo_id, duedate, done, content, ctime)
+VALUES (seq_todo.nextval, NULL, 0, '쇼핑', sysdate);
+
+SELECT * FROM todo;
+
+COMMIT ;
+
+SELECT * FROM todo
+WHERE todo_id = 2;
+
+CREATE TABLE student (
+	stuNo number PRIMARY KEY,
+	stuName varchar2(100) NOT NULL,
+	korScore number CHECK (korScore >=0 AND korScore <= 100),
+	engScore number CHECK (engScore >=0 AND engScore <= 100),
+	mathScore number CHECK (mathScore >=0 AND mathScore <= 100)
+);
+
+SELECT  stuNo,
+		stuName,
+		korScore,
+		engScore,
+		mathScore,
+		(korScore + engScore + mathScore) AS totalScore,
+		round((korScore + engScore + mathScore ) / 3) AS avrScore,
+		CASE
+			WHEN (korScore + engScore + mathScore) / 3 >= 90 THEN 'A'
+			WHEN (korScore + engScore + mathScore) / 3 >= 80 THEN 'B'
+			WHEN (korScore + engScore + mathScore) / 3 >= 70 THEN 'C'
+			ELSE 'D'
+		END AS stuGrade
+FROM student ORDER BY stuNo;
+
+INSERT INTO student (stuNo, stuName, korScore, engScore, mathScore)
+VALUES (seq_todo.nextval, '홍길동', 80, 85, 90);
+
+INSERT INTO student (stuNo, stuName, korScore, engScore, mathScore)
+VALUES (seq_todo.nextval, '나훈아', 71, 70, 70);
+		
+SELECT * FROM student;
+
+COMMIT;
+
+SELECT * FROM emp;
+
