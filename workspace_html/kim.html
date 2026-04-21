@@ -1,0 +1,1679 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2차전지 MES 시스템</title>
+
+  <style>
+    /* =========================================================
+       01. 기본 설정
+    ========================================================= */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --main: #0A1E3C;
+      --main-soft: #122a52;
+      --symbol: #0047AB;
+      --point: #FF4500;
+      --bg: #f4f7fb;
+      --white: #ffffff;
+      --line: #dde5f0;
+      --text: #1d2a39;
+      --sub-text: #66788a;
+      --success: #0f9d58;
+      --warning: #ff9800;
+      --danger: #d93025;
+      --shadow: 0 10px 25px rgba(10, 30, 60, 0.08);
+      --radius: 18px;
+    }
+
+    body {
+      font-family: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    button, input, select {
+      font: inherit;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    ul, li {
+      list-style: none;
+    }
+
+    /* =========================================================
+       02. 전체 레이아웃
+    ========================================================= */
+    .app {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 270px;
+      background: linear-gradient(180deg, var(--main) 0%, #08172e 100%);
+      color: var(--white);
+      padding: 24px 18px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 100;
+    }
+
+    .logo-box {
+      padding: 18px 16px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.06);
+      margin-bottom: 22px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .logo-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .logo-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--point), #ff7a32);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--white);
+      box-shadow: 0 8px 18px rgba(255, 69, 0, 0.25);
+    }
+
+    .logo-title {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.4px;
+    }
+
+    .logo-sub {
+      font-size: 12px;
+      color: rgba(255,255,255,0.72);
+      line-height: 1.5;
+    }
+
+    .menu-group {
+      margin-top: 18px;
+    }
+
+    .menu-group-title {
+      font-size: 12px;
+      color: rgba(255,255,255,0.58);
+      margin: 16px 10px 10px;
+      letter-spacing: 0.4px;
+    }
+
+    .menu-btn {
+      width: 100%;
+      border: none;
+      background: transparent;
+      color: var(--white);
+      text-align: left;
+      padding: 14px 14px;
+      border-radius: 14px;
+      cursor: pointer;
+      margin-bottom: 6px;
+      transition: 0.25s;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .menu-btn:hover {
+      background: rgba(255,255,255,0.08);
+    }
+
+    .menu-btn.active {
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .menu-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .menu-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+    }
+
+    .menu-label {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .badge-mini {
+      min-width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      background: var(--point);
+      color: var(--white);
+      font-size: 12px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 8px;
+    }
+
+    .content {
+      margin-left: 270px;
+      width: calc(100% - 270px);
+      padding: 28px;
+    }
+
+    /* =========================================================
+       03. 상단 헤더
+    ========================================================= */
+    .topbar {
+      background: var(--white);
+      border-radius: 22px;
+      padding: 18px 22px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 22px;
+      border: 1px solid #edf2f8;
+    }
+
+    .topbar-left h1 {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--main);
+      margin-bottom: 6px;
+      letter-spacing: -0.6px;
+    }
+
+    .topbar-left p {
+      font-size: 14px;
+      color: var(--sub-text);
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .role-switch {
+      display: flex;
+      align-items: center;
+      background: #eef3fb;
+      border-radius: 999px;
+      padding: 4px;
+    }
+
+    .role-btn {
+      border: none;
+      background: transparent;
+      color: var(--main);
+      padding: 10px 16px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .role-btn.active {
+      background: var(--symbol);
+      color: var(--white);
+      box-shadow: 0 6px 16px rgba(0, 71, 171, 0.18);
+    }
+
+    .topbar-chip {
+      background: #f6f8fc;
+      border: 1px solid var(--line);
+      color: var(--main);
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .primary-btn,
+    .line-btn,
+    .danger-btn {
+      border: none;
+      cursor: pointer;
+      border-radius: 14px;
+      padding: 12px 16px;
+      font-weight: 700;
+      transition: 0.2s;
+    }
+
+    .primary-btn {
+      background: var(--point);
+      color: var(--white);
+      box-shadow: 0 8px 18px rgba(255, 69, 0, 0.18);
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .line-btn {
+      background: var(--white);
+      color: var(--main);
+      border: 1px solid var(--line);
+    }
+
+    .danger-btn {
+      background: #fff1ef;
+      color: var(--danger);
+      border: 1px solid #ffd3cc;
+    }
+
+    /* =========================================================
+       04. 카드 / 공통 박스
+    ========================================================= */
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+
+    .summary-card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+      border: 1px solid #edf2f8;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .summary-card::after {
+      content: "";
+      position: absolute;
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      right: -28px;
+      top: -28px;
+      background: rgba(0, 71, 171, 0.06);
+    }
+
+    .card-label {
+      font-size: 13px;
+      color: var(--sub-text);
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .card-value {
+      font-size: 30px;
+      font-weight: 800;
+      color: var(--main);
+      margin-bottom: 8px;
+    }
+
+    .card-status {
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .status-up {
+      color: var(--success);
+    }
+
+    .status-warn {
+      color: var(--warning);
+    }
+
+    .panel-row {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+
+    .panel {
+      background: var(--white);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      border: 1px solid #edf2f8;
+      padding: 22px;
+    }
+
+    .panel-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .panel-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--main);
+      letter-spacing: -0.4px;
+    }
+
+    .panel-sub {
+      font-size: 13px;
+      color: var(--sub-text);
+      margin-top: 4px;
+    }
+
+    .chip-wrap {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1px solid var(--line);
+      background: #f8fbff;
+      color: var(--main);
+      cursor: pointer;
+    }
+
+    .chip.active {
+      background: var(--symbol);
+      color: var(--white);
+      border-color: var(--symbol);
+    }
+
+    /* =========================================================
+       05. 테이블
+    ========================================================= */
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 760px;
+      background: var(--white);
+    }
+
+    thead {
+      background: #f6f9fe;
+    }
+
+    th, td {
+      padding: 15px 14px;
+      text-align: left;
+      font-size: 14px;
+      border-bottom: 1px solid #edf2f8;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    th {
+      color: var(--main);
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    td {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    tbody tr:hover {
+      background: #fbfdff;
+    }
+
+    .table-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tiny-btn {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--main);
+      font-size: 12px;
+      padding: 7px 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    /* =========================================================
+       06. 배지 / 상태 표시
+    ========================================================= */
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .pill.blue {
+      background: #eaf2ff;
+      color: var(--symbol);
+    }
+
+    .pill.orange {
+      background: #fff1e8;
+      color: var(--point);
+    }
+
+    .pill.green {
+      background: #eaf7ef;
+      color: var(--success);
+    }
+
+    .pill.red {
+      background: #fdeeee;
+      color: var(--danger);
+    }
+
+    .pill.gray {
+      background: #eff3f7;
+      color: #617283;
+    }
+
+    /* =========================================================
+       07. 검색 / 필터
+    ========================================================= */
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .toolbar-left,
+    .toolbar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .search-box,
+    .select-box {
+      height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      padding: 0 14px;
+      color: var(--text);
+      outline: none;
+    }
+
+    .search-box {
+      min-width: 260px;
+    }
+
+    .select-box {
+      min-width: 150px;
+    }
+
+    /* =========================================================
+       08. 가짜 차트 영역
+    ========================================================= */
+    .chart-box {
+      display: flex;
+      align-items: end;
+      gap: 14px;
+      height: 260px;
+      padding: 16px 8px 6px;
+    }
+
+    .chart-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .bar {
+      width: 100%;
+      max-width: 48px;
+      border-radius: 12px 12px 0 0;
+      background: linear-gradient(180deg, var(--symbol), var(--main));
+      min-height: 60px;
+      box-shadow: 0 10px 18px rgba(0, 71, 171, 0.12);
+    }
+
+    .chart-label {
+      font-size: 12px;
+      color: var(--sub-text);
+      font-weight: 700;
+    }
+
+    .chart-value {
+      font-size: 12px;
+      color: var(--main);
+      font-weight: 800;
+    }
+
+    /* =========================================================
+       09. 공정 타임라인 / 상태 박스
+    ========================================================= */
+    .flow-wrap {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 10px;
+    }
+
+    .flow-card {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+      background: #fcfdff;
+    }
+
+    .flow-step {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      background: var(--main);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .flow-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--main);
+      margin-bottom: 8px;
+    }
+
+    .flow-text {
+      font-size: 13px;
+      color: var(--sub-text);
+      line-height: 1.6;
+    }
+
+    /* =========================================================
+       10. 역할별 숨김 처리
+    ========================================================= */
+    .admin-only {
+      display: block;
+    }
+
+    .worker-mode .admin-only {
+      display: none !important;
+    }
+
+    .worker-mode .content {
+      /* 구조 유지용 */
+    }
+
+    /* =========================================================
+       11. 모달
+    ========================================================= */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 30, 60, 0.45);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 999;
+    }
+
+    .modal-backdrop.show {
+      display: flex;
+    }
+
+    .modal {
+      width: 100%;
+      max-width: 560px;
+      background: var(--white);
+      border-radius: 24px;
+      box-shadow: 0 22px 55px rgba(10, 30, 60, 0.18);
+      overflow: hidden;
+    }
+
+    .modal-head {
+      padding: 22px 24px 16px;
+      border-bottom: 1px solid #edf2f8;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .modal-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--main);
+    }
+
+    .modal-close {
+      border: none;
+      background: #f3f6fb;
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 18px;
+      color: var(--main);
+      font-weight: 700;
+    }
+
+    .modal-body {
+      padding: 22px 24px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .form-col {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-col.full {
+      grid-column: 1 / -1;
+    }
+
+    .form-label {
+      font-size: 13px;
+      color: var(--main);
+      font-weight: 800;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px 14px;
+      outline: none;
+      background: #fff;
+      color: var(--text);
+    }
+
+    .form-textarea {
+      resize: none;
+      min-height: 120px;
+    }
+
+    .modal-foot {
+      padding: 18px 24px 24px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* =========================================================
+       12. 토스트
+    ========================================================= */
+    .toast {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      background: var(--main);
+      color: var(--white);
+      padding: 14px 18px;
+      border-radius: 14px;
+      box-shadow: 0 12px 26px rgba(10, 30, 60, 0.18);
+      font-size: 14px;
+      font-weight: 700;
+      display: none;
+      z-index: 1200;
+    }
+
+    .toast.show {
+      display: block;
+      animation: fadeToast 2.4s ease forwards;
+    }
+
+    @keyframes fadeToast {
+      0% { opacity: 0; transform: translateY(12px); }
+      10%, 80% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(12px); }
+    }
+
+    /* =========================================================
+       13. 반응형
+    ========================================================= */
+    @media (max-width: 1200px) {
+      .grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .panel-row {
+        grid-template-columns: 1fr;
+      }
+
+      .flow-wrap {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+      }
+
+      .app {
+        flex-direction: column;
+      }
+
+      .content {
+        margin-left: 0;
+        width: 100%;
+        padding: 18px;
+      }
+
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .grid-4 {
+        grid-template-columns: 1fr;
+      }
+
+      .flow-wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .search-box,
+      .select-box {
+        width: 100%;
+        min-width: auto;
+      }
+
+      .toolbar-left,
+      .toolbar-right {
+        width: 100%;
+      }
+
+      .topbar-left h1 {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app" id="app">
+    <!-- =========================================================
+         01. 사이드바
+    ========================================================= -->
+    <aside class="sidebar">
+      <div class="logo-box">
+        <div class="logo-top">
+          <div class="logo-mark">MES</div>
+          <div>
+            <div class="logo-title">Battery MES</div>
+            <div class="logo-sub">2차전지 생산관리 시스템<br>발표용 UI 뼈대 화면</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-group">
+        <div class="menu-group-title">MAIN MENU</div>
+
+        <button class="menu-btn active" data-section="dashboard">
+          <span class="menu-left">
+            <span class="menu-icon">🏠</span>
+            <span class="menu-label">대시보드</span>
+          </span>
+        </button>
+
+        <button class="menu-btn" data-section="production">
+          <span class="menu-left">
+            <span class="menu-icon">🏭</span>
+            <span class="menu-label">생산관리</span>
+          </span>
+          <span class="badge-mini">5</span>
+        </button>
+
+        <button class="menu-btn" data-section="quality">
+          <span class="menu-left">
+            <span class="menu-icon">🧪</span>
+            <span class="menu-label">품질관리</span>
+          </span>
+        </button>
+
+        <button class="menu-btn" data-section="inventory">
+          <span class="menu-left">
+            <span class="menu-icon">📦</span>
+            <span class="menu-label">자재관리</span>
+          </span>
+        </button>
+
+        <button class="menu-btn" data-section="equipment">
+          <span class="menu-left">
+            <span class="menu-icon">⚙️</span>
+            <span class="menu-label">설비관리</span>
+          </span>
+        </button>
+
+        <button class="menu-btn admin-only" data-section="employee">
+          <span class="menu-left">
+            <span class="menu-icon">👤</span>
+            <span class="menu-label">사원관리</span>
+          </span>
+        </button>
+      </div>
+
+      <div class="menu-group">
+        <div class="menu-group-title">SYSTEM INFO</div>
+
+        <button class="menu-btn" type="button">
+          <span class="menu-left">
+            <span class="menu-icon">🔔</span>
+            <span class="menu-label">알림센터</span>
+          </span>
+          <span class="badge-mini">3</span>
+        </button>
+
+        <button class="menu-btn" type="button">
+          <span class="menu-left">
+            <span class="menu-icon">📄</span>
+            <span class="menu-label">작업이력</span>
+          </span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- =========================================================
+         02. 본문
+    ========================================================= -->
+    <main class="content">
+
+      <!-- 상단 헤더 -->
+      <div class="topbar">
+        <div class="topbar-left">
+          <h1 id="pageTitle">대시보드</h1>
+          <p id="pageDesc">실시간 생산 현황과 주요 지표를 한눈에 확인하는 메인 화면이다.</p>
+        </div>
+
+        <div class="topbar-right">
+          <div class="role-switch">
+            <button class="role-btn active" id="adminBtn" type="button">관리자 화면</button>
+            <button class="role-btn" id="workerBtn" type="button">작업자 화면</button>
+          </div>
+
+          <div class="topbar-chip">2026.04.02 기준 시연 화면</div>
+          <button class="line-btn" type="button" id="noticeBtn">공지보기</button>
+          <button class="primary-btn" type="button" id="openModalBtn">+ 신규 등록</button>
+        </div>
+      </div>
+
+      <!-- =========================================================
+           03. 대시보드
+      ========================================================= -->
+      <section class="section active" id="dashboard">
+        <div class="grid-4">
+          <div class="summary-card">
+            <div class="card-label">오늘 생산 실적</div>
+            <div class="card-value">1,280</div>
+            <div class="card-status status-up">▲ 전일 대비 8.4% 증가</div>
+          </div>
+
+          <div class="summary-card">
+            <div class="card-label">불량 건수</div>
+            <div class="card-value">12</div>
+            <div class="card-status status-warn">품질 점검 필요</div>
+          </div>
+
+          <div class="summary-card">
+            <div class="card-label">설비 가동률</div>
+            <div class="card-value">92%</div>
+            <div class="card-status status-up">정상 운영 중</div>
+          </div>
+
+          <div class="summary-card">
+            <div class="card-label">자재 재고 알림</div>
+            <div class="card-value">4건</div>
+            <div class="card-status status-warn">부족 자재 확인 필요</div>
+          </div>
+        </div>
+
+        <div class="panel-row">
+          <div class="panel">
+            <div class="panel-top">
+              <div>
+                <div class="panel-title">주간 생산량 현황</div>
+                <div class="panel-sub">공정별 생산 실적을 주간 기준으로 요약한 차트 영역이다.</div>
+              </div>
+
+              <div class="chip-wrap">
+                <button class="chip active" type="button">이번 주</button>
+                <button class="chip" type="button">이번 달</button>
+                <button class="chip" type="button">분기</button>
+              </div>
+            </div>
+
+            <div class="chart-box">
+              <div class="chart-item">
+                <div class="bar" style="height: 120px;"></div>
+                <div class="chart-value">820</div>
+                <div class="chart-label">월</div>
+              </div>
+              <div class="chart-item">
+                <div class="bar" style="height: 150px;"></div>
+                <div class="chart-value">960</div>
+                <div class="chart-label">화</div>
+              </div>
+              <div class="chart-item">
+                <div class="bar" style="height: 190px;"></div>
+                <div class="chart-value">1,180</div>
+                <div class="chart-label">수</div>
+              </div>
+              <div class="chart-item">
+                <div class="bar" style="height: 210px;"></div>
+                <div class="chart-value">1,280</div>
+                <div class="chart-label">목</div>
+              </div>
+              <div class="chart-item">
+                <div class="bar" style="height: 170px;"></div>
+                <div class="chart-value">1,040</div>
+                <div class="chart-label">금</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-top">
+              <div>
+                <div class="panel-title">오늘의 작업 흐름</div>
+                <div class="panel-sub">2차전지 생산 공정 흐름 예시를 보여주는 영역이다.</div>
+              </div>
+            </div>
+
+            <div class="flow-wrap">
+              <div class="flow-card">
+                <div class="flow-step">1</div>
+                <div class="flow-title">전극공정</div>
+                <div class="flow-text">슬러리 코팅 및 건조 진행 중</div>
+              </div>
+
+              <div class="flow-card">
+                <div class="flow-step">2</div>
+                <div class="flow-title">조립공정</div>
+                <div class="flow-text">셀 적층 및 조립 작업 진행</div>
+              </div>
+
+              <div class="flow-card">
+                <div class="flow-step">3</div>
+                <div class="flow-title">활성화공정</div>
+                <div class="flow-text">충방전 및 안정화 대기 중</div>
+              </div>
+
+              <div class="flow-card">
+                <div class="flow-step">4</div>
+                <div class="flow-title">검사공정</div>
+                <div class="flow-text">최종 품질검사 및 출하 준비</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-top">
+            <div>
+              <div class="panel-title">주요 생산지시 현황</div>
+              <div class="panel-sub">오늘 처리 예정인 생산지시 목록 예시이다.</div>
+            </div>
+
+            <div class="chip-wrap">
+              <span class="pill blue">진행중 3</span>
+              <span class="pill orange">대기 2</span>
+              <span class="pill green">완료 1</span>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>지시번호</th>
+                  <th>제품명</th>
+                  <th>라인</th>
+                  <th>담당자</th>
+                  <th>계획수량</th>
+                  <th>진행상태</th>
+                  <th>작업</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>WO-2026-041</td>
+                  <td>원통형 배터리 A</td>
+                  <td>1라인</td>
+                  <td>김소유</td>
+                  <td>1,000 EA</td>
+                  <td><span class="pill blue">진행중</span></td>
+                  <td>
+                    <div class="table-actions">
+                      <button class="tiny-btn" type="button">상세보기</button>
+                      <button class="tiny-btn" type="button">수정</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>WO-2026-042</td>
+                  <td>파우치형 배터리 B</td>
+                  <td>2라인</td>
+                  <td>이현우</td>
+                  <td>800 EA</td>
+                  <td><span class="pill orange">대기</span></td>
+                  <td>
+                    <div class="table-actions">
+                      <button class="tiny-btn" type="button">상세보기</button>
+                      <button class="tiny-btn" type="button">수정</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>WO-2026-043</td>
+                  <td>각형 배터리 C</td>
+                  <td>3라인</td>
+                  <td>박지민</td>
+                  <td>1,200 EA</td>
+                  <td><span class="pill green">완료</span></td>
+                  <td>
+                    <div class="table-actions">
+                      <button class="tiny-btn" type="button">상세보기</button>
+                      <button class="tiny-btn" type="button">수정</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           04. 생산관리
+      ========================================================= -->
+      <section class="section" id="production">
+        <div class="panel">
+          <div class="panel-top">
+            <div>
+              <div class="panel-title">생산지시 관리</div>
+              <div class="panel-sub">생산지시 등록, 조회, 진행상태 확인용 화면이다.</div>
+            </div>
+          </div>
+
+          <div class="toolbar">
+            <div class="toolbar-left">
+              <input class="search-box" type="text" placeholder="지시번호 또는 제품명을 입력하세요" />
+              <select class="select-box">
+                <option>전체 라인</option>
+                <option>1라인</option>
+                <option>2라인</option>
+                <option>3라인</option>
+              </select>
+              <select class="select-box">
+                <option>전체 상태</option>
+                <option>대기</option>
+                <option>진행중</option>
+                <option>완료</option>
+              </select>
+            </div>
+
+            <div class="toolbar-right">
+              <button class="line-btn" type="button">조회</button>
+              <button class="primary-btn" type="button">생산지시 등록</button>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>지시번호</th>
+                  <th>제품코드</th>
+                  <th>제품명</th>
+                  <th>라인</th>
+                  <th>시작일</th>
+                  <th>종료일</th>
+                  <th>지시수량</th>
+                  <th>상태</th>
+                  <th>작업</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>WO-2026-041</td>
+                  <td>BAT-A001</td>
+                  <td>원통형 배터리 A</td>
+                  <td>1라인</td>
+                  <td>2026-04-02</td>
+                  <td>2026-04-03</td>
+                  <td>1,000</td>
+                  <td><span class="pill blue">진행중</span></td>
+                  <td><button class="tiny-btn" type="button">보기</button></td>
+                </tr>
+                <tr>
+                  <td>WO-2026-042</td>
+                  <td>BAT-B002</td>
+                  <td>파우치형 배터리 B</td>
+                  <td>2라인</td>
+                  <td>2026-04-03</td>
+                  <td>2026-04-04</td>
+                  <td>800</td>
+                  <td><span class="pill orange">대기</span></td>
+                  <td><button class="tiny-btn" type="button">보기</button></td>
+                </tr>
+                <tr>
+                  <td>WO-2026-043</td>
+                  <td>BAT-C003</td>
+                  <td>각형 배터리 C</td>
+                  <td>3라인</td>
+                  <td>2026-04-01</td>
+                  <td>2026-04-02</td>
+                  <td>1,200</td>
+                  <td><span class="pill green">완료</span></td>
+                  <td><button class="tiny-btn" type="button">보기</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           05. 품질관리
+      ========================================================= -->
+      <section class="section" id="quality">
+        <div class="panel">
+          <div class="panel-top">
+            <div>
+              <div class="panel-title">품질검사 / 불량관리</div>
+              <div class="panel-sub">검사 결과와 불량 내역을 확인하는 화면이다.</div>
+            </div>
+
+            <div class="chip-wrap">
+              <span class="pill red">불량 12건</span>
+              <span class="pill blue">검사중 4건</span>
+            </div>
+          </div>
+
+          <div class="toolbar">
+            <div class="toolbar-left">
+              <input class="search-box" type="text" placeholder="LOT번호 또는 제품명을 검색하세요" />
+              <select class="select-box">
+                <option>전체 검사상태</option>
+                <option>검사대기</option>
+                <option>검사중</option>
+                <option>합격</option>
+                <option>불합격</option>
+              </select>
+            </div>
+
+            <div class="toolbar-right">
+              <button class="line-btn" type="button">조회</button>
+              <button class="primary-btn" type="button">불량 등록</button>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>LOT번호</th>
+                  <th>제품명</th>
+                  <th>검사유형</th>
+                  <th>검사일</th>
+                  <th>검사자</th>
+                  <th>판정</th>
+                  <th>불량유형</th>
+                  <th>작업</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>LOT-260402-01</td>
+                  <td>원통형 배터리 A</td>
+                  <td>외관검사</td>
+                  <td>2026-04-02</td>
+                  <td>김하늘</td>
+                  <td><span class="pill green">합격</span></td>
+                  <td>-</td>
+                  <td><button class="tiny-btn" type="button">상세</button></td>
+                </tr>
+                <tr>
+                  <td>LOT-260402-02</td>
+                  <td>파우치형 배터리 B</td>
+                  <td>전압검사</td>
+                  <td>2026-04-02</td>
+                  <td>박민지</td>
+                  <td><span class="pill red">불합격</span></td>
+                  <td>전압 이상</td>
+                  <td><button class="tiny-btn" type="button">상세</button></td>
+                </tr>
+                <tr>
+                  <td>LOT-260402-03</td>
+                  <td>각형 배터리 C</td>
+                  <td>치수검사</td>
+                  <td>2026-04-02</td>
+                  <td>정수빈</td>
+                  <td><span class="pill blue">검사중</span></td>
+                  <td>-</td>
+                  <td><button class="tiny-btn" type="button">상세</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           06. 자재관리
+      ========================================================= -->
+      <section class="section" id="inventory">
+        <div class="panel">
+          <div class="panel-top">
+            <div>
+              <div class="panel-title">자재 입출고 / 재고관리</div>
+              <div class="panel-sub">현재 재고 현황과 부족 자재를 한 번에 확인하는 화면이다.</div>
+            </div>
+          </div>
+
+          <div class="grid-4" style="margin-top: 8px;">
+            <div class="summary-card">
+              <div class="card-label">양극재 재고</div>
+              <div class="card-value">520 kg</div>
+              <div class="card-status status-up">정상</div>
+            </div>
+            <div class="summary-card">
+              <div class="card-label">음극재 재고</div>
+              <div class="card-value">410 kg</div>
+              <div class="card-status status-up">정상</div>
+            </div>
+            <div class="summary-card">
+              <div class="card-label">분리막 재고</div>
+              <div class="card-value">88 roll</div>
+              <div class="card-status status-warn">안전재고 이하 임박</div>
+            </div>
+            <div class="summary-card">
+              <div class="card-label">전해액 재고</div>
+              <div class="card-value">120 L</div>
+              <div class="card-status status-warn">발주 필요</div>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>자재코드</th>
+                  <th>자재명</th>
+                  <th>구분</th>
+                  <th>현재재고</th>
+                  <th>안전재고</th>
+                  <th>보관위치</th>
+                  <th>상태</th>
+                  <th>작업</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>MAT-001</td>
+                  <td>양극재</td>
+                  <td>원재료</td>
+                  <td>520 kg</td>
+                  <td>300 kg</td>
+                  <td>A-01</td>
+                  <td><span class="pill green">정상</span></td>
+                  <td><button class="tiny-btn" type="button">상세</button></td>
+                </tr>
+                <tr>
+                  <td>MAT-002</td>
+                  <td>전해액</td>
+                  <td>원재료</td>
+                  <td>120 L</td>
+                  <td>150 L</td>
+                  <td>B-02</td>
+                  <td><span class="pill orange">부족</span></td>
+                  <td><button class="tiny-btn" type="button">상세</button></td>
+                </tr>
+                <tr>
+                  <td>MAT-003</td>
+                  <td>분리막</td>
+                  <td>부자재</td>
+                  <td>88 roll</td>
+                  <td>80 roll</td>
+                  <td>C-01</td>
+                  <td><span class="pill blue">확인필요</span></td>
+                  <td><button class="tiny-btn" type="button">상세</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           07. 설비관리
+      ========================================================= -->
+      <section class="section" id="equipment">
+        <div class="panel">
+          <div class="panel-top">
+            <div>
+              <div class="panel-title">설비 점검 / 가동 현황</div>
+              <div class="panel-sub">라인별 설비 상태와 점검 일정을 확인하는 화면이다.</div>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>설비코드</th>
+                  <th>설비명</th>
+                  <th>라인</th>
+                  <th>가동상태</th>
+                  <th>점검주기</th>
+                  <th>최근점검일</th>
+                  <th>다음점검일</th>
+                  <th>작업</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>EQ-101</td>
+                  <td>코팅기</td>
+                  <td>1라인</td>
+                  <td><span class="pill green">정상가동</span></td>
+                  <td>월 1회</td>
+                  <td>2026-03-20</td>
+                  <td>2026-04-20</td>
+                  <td><button class="tiny-btn" type="button">점검이력</button></td>
+                </tr>
+                <tr>
+                  <td>EQ-102</td>
+                  <td>적층기</td>
+                  <td>2라인</td>
+                  <td><span class="pill orange">점검예정</span></td>
+                  <td>월 1회</td>
+                  <td>2026-03-18</td>
+                  <td>2026-04-18</td>
+                  <td><button class="tiny-btn" type="button">점검이력</button></td>
+                </tr>
+                <tr>
+                  <td>EQ-103</td>
+                  <td>충방전기</td>
+                  <td>3라인</td>
+                  <td><span class="pill red">정비중</span></td>
+                  <td>주 1회</td>
+                  <td>2026-03-30</td>
+                  <td>2026-04-06</td>
+                  <td><button class="tiny-btn" type="button">점검이력</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           08. 사원관리
+      ========================================================= -->
+      <section class="section admin-only" id="employee">
+        <div class="panel">
+          <div class="panel-top">
+            <div>
+              <div class="panel-title">사원정보 관리</div>
+              <div class="panel-sub">관리자 전용 화면으로 사원 정보와 권한을 관리하는 영역이다.</div>
+            </div>
+
+            <div class="chip-wrap">
+              <span class="pill blue">관리자 4명</span>
+              <span class="pill gray">작업자 18명</span>
+            </div>
+          </div>
+
+          <div class="toolbar">
+            <div class="toolbar-left">
+              <input class="search-box" type="text" placeholder="사번 또는 이름을 검색하세요" />
+              <select class="select-box">
+                <option>전체 부서</option>
+                <option>생산팀</option>
+                <option>품질팀</option>
+                <option>자재팀</option>
+                <option>설비팀</option>
+              </select>
+            </div>
+
+            <div class="toolbar-right">
+              <button class="line-btn" type="button">조회</button>
+              <button class="primary-btn" type="button">사원 등록</button>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>사번</th>
+                  <th>이름</th>
+                  <th>부서</th>
+                  <th>직급</th>
+                  <th>권한</th>
+                  <th>연락처</th>
+                  <th>상태</th>
+                  <th>작업</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>EMP-001</td>
+                  <td>김소유</td>
+                  <td>생산팀</td>
+                  <td>대리</td>
+                  <td><span class="pill blue">관리자</span></td>
+                  <td>010-1234-5678</td>
+                  <td><span class="pill green">재직중</span></td>
+                  <td><button class="tiny-btn" type="button">수정</button></td>
+                </tr>
+                <tr>
+                  <td>EMP-002</td>
+                  <td>이현우</td>
+                  <td>품질팀</td>
+                  <td>사원</td>
+                  <td><span class="pill gray">작업자</span></td>
+                  <td>010-2222-3333</td>
+                  <td><span class="pill green">재직중</span></td>
+                  <td><button class="tiny-btn" type="button">수정</button></td>
+                </tr>
+                <tr>
+                  <td>EMP-003</td>
+                  <td>박지민</td>
+                  <td>설비팀</td>
+                  <td>과장</td>
+                  <td><span class="pill blue">관리자</span></td>
+                  <td>010-4444-5555</td>
+                  <td><span class="pill green">재직중</span></td>
+                  <td><button class="tiny-btn" type="button">수정</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- =========================================================
+       09. 등록 모달
+  ========================================================= -->
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal">
+      <div class="modal-head">
+        <div class="modal-title">신규 등록</div>
+        <button class="modal-close" type="button" id="closeModalBtn">×</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-grid">
+          <div class="form-col">
+            <label class="form-label">등록 구분</label>
+            <select class="form-select">
+              <option>생산지시</option>
+              <option>불량내역</option>
+              <option>자재입고</option>
+              <option>설비점검</option>
+              <option>사원정보</option>
+            </select>
+          </div>
+
+          <div class="form-col">
+            <label class="form-label">라인</label>
+            <select class="form-select">
+              <option>1라인</option>
+              <option>2라인</option>
+              <option>3라인</option>
+            </select>
+          </div>
+
+          <div class="form-col">
+            <label class="form-label">코드</label>
+            <input class="form-input" type="text" placeholder="예: WO-2026-044" />
+          </div>
+
+          <div class="form-col">
+            <label class="form-label">담당자</label>
+            <input class="form-input" type="text" placeholder="담당자 이름 입력" />
+          </div>
+
+          <div class="form-col full">
+            <label class="form-label">제목 / 항목명</label>
+            <input class="form-input" type="text" placeholder="등록할 항목명을 입력하세요" />
+          </div>
+
+          <div class="form-col full">
+            <label class="form-label">상세 내용</label>
+            <textarea class="form-textarea" placeholder="발표용 뼈대 화면이므로 저장 기능은 연결하지 않았다."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-foot">
+        <button class="line-btn" type="button" id="cancelModalBtn">취소</button>
+        <button class="primary-btn" type="button" id="saveMockBtn">등록</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 토스트 -->
+  <div class="toast" id="toast">시연용 화면으로 동작만 보여주는 UI이다.</div>
+
+  <script>
+    /* =========================================================
+       01. 공통 요소 선택
+    ========================================================= */
+    const app = document.getElementById("app");
+    const menuButtons = document.querySelectorAll(".menu-btn[data-section]");
+    const sections = document.querySelectorAll(".section");
+    const pageTitle = document.getElementById("pageTitle");
+    const pageDesc = document.getElementById("pageDesc");
+
+    const adminBtn = document.getElementById("adminBtn");
+    const workerBtn = document.getElementById("workerBtn");
+
+    const modalBackdrop = document.getElementById("modalBackdrop");
+    const openModalBtn = document.getElementById("openModalBtn");
+    const closeModalBtn = document.getElementById("closeModalBtn");
+    const cancelModalBtn = document.getElementById("cancelModalBtn");
+    const saveMockBtn = document.getElementById("saveMockBtn");
+
+    const noticeBtn = document.getElementById("noticeBtn");
+    const toast = document.getElementById("toast");
+
+    /* =========================================================
+       02. 페이지 제목 / 설명 데이터
+    ========================================================= */
+    const pageInfo = {
+      dashboard: {
+        title: "대시보드",
+        desc: "실시간 생산 현황과 주요 지표를 한눈에 확인하는 메인 화면이다."
+      },
+      production: {
+        title: "생산관리",
+        desc: "생산지시 등록, 조회, 진행상태를 관리하는 화면이다."
+      },
+      quality: {
+        title: "품질관리",
+        desc: "검사 결과와 불량 내역을 확인하는 품질 관리 화면이다."
+      },
+      inventory: {
+        title: "인벤토리",
+        desc: "인벤토리다."
+      }
+    }
+    </script>
+</body>

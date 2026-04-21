@@ -13,12 +13,13 @@
 
 <h1>Coupang Login</h1>
 <br><br><br>
-<form method="post" action="/login">
+<form method="post" action="/proj041_coupang/login">
 아이디 : <input type='text' name='user_id'><br>
 비밀번호 : <input type='password' name='user_pw'><br>
-<input type='submit' value='로그인'>
+<input type='submit' value='로그인'><br>
 </form>
-
+<br>
+<a href="/proj041_coupang/join">회원가입</a>
 
 </body>
 </html>

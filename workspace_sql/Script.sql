@@ -1257,7 +1257,7 @@ AS (SELECT empno, ename, job, deptno
 SELECT * FROM vw_emp20;
 
 SELECT * FROM vw_emp20
-WHERE job = 'CLERK';
+WHERE job = 'CLERK' AND ENAME = 'SMITH';
 
 CREATE TABLE dept_seq
 AS SELECT * FROM dept WHERE 1 != 1;
@@ -1523,5 +1523,15 @@ SELECT * FROM student;
 
 COMMIT;
 
-SELECT * FROM emp;
+SELECT * FROM emp
+WHERE ename = 'SMITH' AND empno = '7369';
 
+SELECT * FROM (
+	SELECT rownum AS rnum, e.* FROM (
+		SELECT emp.* FROM emp
+		ORDER BY hiredate -- order by가 실행 순서가 제일 느려서 순서가 섞임
+	) e -- 그래서 셀렉 한번 더
+)
+WHERE rnum >= 3 and rnum <= 7; -- where가 또 셀렉보다 느려서 셀렉 한번 더
+
+SELECT count(*) FROM emp;
